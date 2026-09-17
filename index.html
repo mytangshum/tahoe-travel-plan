@@ -8,17 +8,27 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>AI 旅行网页模板</title>
-  <link rel="stylesheet" href="styles.css?v=20270116-ski-5">
+  <link rel="stylesheet" href="styles.css?v=20270116-gate-1">
   <link rel="stylesheet" href="ledger.css?v=20270116-ski-1">
   <script src="runtime-storage.js?v=20270116-sync-1" defer></script>
   <script src="overview-map.js?v=20260910-2" defer></script>
   <script src="route-ui.js?v=20260910-2" defer></script>
-  <script src="app.js?v=20270116-flights-1" defer></script>
+  <script src="app.js?v=20270116-gate-1" defer></script>
   <script src="ticket-pdf-preview.js?v=20260910-2" defer></script>
   <script src="ledger.js?v=20270116-usd-1" defer></script>
   <script src="site-navigation.js?v=20260910-2" defer></script>
 </head>
 <body>
+  <div class="access-gate" id="access-gate" role="dialog" aria-modal="true" aria-labelledby="access-gate-title">
+    <form class="access-gate__panel" id="access-gate-form">
+      <span class="access-gate__icon" aria-hidden="true">🏔️</span>
+      <h2 id="access-gate-title">Tahoe-Mammoth</h2>
+      <p>请输入访问密码查看旅行计划。</p>
+      <input id="access-gate-password" type="password" autocomplete="current-password" aria-label="访问密码" placeholder="访问密码">
+      <button type="submit">进入</button>
+      <small id="access-gate-error" role="alert" hidden>密码不正确，请再试一次。</small>
+    </form>
+  </div>
   <a class="skip-link" id="skip-link" href="#main">跳到主要内容</a>
   <header class="topbar" id="topbar">
     <a class="wordmark" id="wordmark" href="#top" aria-label="返回顶部"></a>

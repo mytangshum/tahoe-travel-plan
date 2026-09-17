@@ -12,6 +12,8 @@ const state = {
 
 const MODULE_NAMES = Object.freeze(["flights", "overview", "itinerary", "todo", "driving", "ledger"]);
 const SHARED_COLLECTIONS = Object.freeze(["todos", "tickets", "itinerary", "ledger"]);
+const ACCESS_GATE_KEY = "tahoe-travel-plan:access:v1";
+const ACCESS_PASSWORD_HASH = "aab74243fcdf39108e3210f6952305d0b0046df9094e2ede1557da98f34e798c";
 
 function normalizeTripConfig(raw = {}) {
   if (!raw || typeof raw !== "object" || raw.schemaVersion !== "1.0.0") throw new Error("trip-data.json config.schemaVersion must be 1.0.0");
@@ -77,6 +79,41 @@ const escapeHtml = (value = "") => String(value).replace(/[&<>'"]/g, (character)
 })[character]);
 
 const airportCity = (airport) => airport.city || airport.airportCode;
+
+async function sha256Hex(value) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function setupAccessGate() {
+  const gate = $("#access-gate");
+  if (!gate) return;
+  const unlock = () => {
+    gate.hidden = true;
+    document.body.classList.remove("access-locked");
+  };
+  if (localStorage.getItem(ACCESS_GATE_KEY) === "ok") {
+    unlock();
+    return;
+  }
+  document.body.classList.add("access-locked");
+  const form = $("#access-gate-form");
+  const input = $("#access-gate-password");
+  const error = $("#access-gate-error");
+  setTimeout(() => input?.focus(), 0);
+  form.onsubmit = async (event) => {
+    event.preventDefault();
+    const hash = await sha256Hex(input.value);
+    if (hash === ACCESS_PASSWORD_HASH) {
+      localStorage.setItem(ACCESS_GATE_KEY, "ok");
+      unlock();
+      return;
+    }
+    error.hidden = false;
+    input.select();
+  };
+}
 
 function localDateTime(date, time, _airportCode, utcOffset = "") {
   return new Date(`${date}T${time}:00${utcOffset || "+00:00"}`);
@@ -1161,4 +1198,7 @@ async function init() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", () => {
+  setupAccessGate();
+  init();
+});

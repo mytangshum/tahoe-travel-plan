@@ -43,6 +43,17 @@ button, a { touch-action: manipulation; }
 button { font: inherit; color: inherit; }
 a { color: inherit; }
 img { display: block; max-width: 100%; }
+body.access-locked { overflow: hidden; }
+.access-gate { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 24px; background: linear-gradient(145deg, rgba(244,248,251,.96), rgba(185,223,242,.94)); backdrop-filter: blur(10px); }
+.access-gate[hidden] { display: none !important; }
+.access-gate__panel { width: min(100%, 360px); padding: 28px 22px 22px; border: 1px solid rgba(255,255,255,.78); border-radius: 24px; background: rgba(255,255,255,.9); box-shadow: 0 24px 80px rgba(28,74,111,.22); text-align: center; }
+.access-gate__icon { display: block; font-size: 42px; line-height: 1; }
+.access-gate h2 { margin: 12px 0 0; color: var(--ink); font-size: 30px; line-height: 1.08; }
+.access-gate p { margin: 10px 0 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.access-gate input { width: 100%; min-height: 48px; padding: 0 14px; border: 1px solid var(--line); border-radius: 13px; background: white; color: var(--ink); font: inherit; outline: none; }
+.access-gate input:focus { border-color: var(--lake); box-shadow: 0 0 0 3px rgba(35,116,166,.12); }
+.access-gate button { width: 100%; min-height: 48px; margin-top: 10px; border: 0; border-radius: 13px; color: white; background: var(--lake); font: inherit; font-weight: 780; cursor: pointer; }
+.access-gate small { display: block; margin-top: 10px; color: var(--warning); font-size: 12px; }
 
 .skip-link {
   position: fixed;
