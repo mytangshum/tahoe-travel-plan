@@ -13,7 +13,7 @@
   <script src="runtime-storage.js?v=20270116-sync-1" defer></script>
   <script src="overview-map.js?v=20260910-2" defer></script>
   <script src="route-ui.js?v=20260910-2" defer></script>
-  <script src="app.js?v=20270116-edit-1" defer></script>
+  <script src="app.js?v=20270116-flights-1" defer></script>
   <script src="ticket-pdf-preview.js?v=20260910-2" defer></script>
   <script src="ledger.js?v=20270116-usd-1" defer></script>
   <script src="site-navigation.js?v=20260910-2" defer></script>
@@ -45,15 +45,20 @@
     </section>
 
     <section class="section flights-section" id="flights" aria-labelledby="flights-title" data-module="flights" hidden>
-      <div class="section-heading">
-        <div>
-          <p class="section-kicker">BOARDING</p>
-          <h2 id="flights-title">航班行程</h2>
-        </div>
-        <p class="section-index" id="flight-index" aria-live="polite">1 / 3</p>
+      <button class="section-heading flight-section-toggle" id="flight-section-toggle" type="button" aria-expanded="false" aria-controls="flight-panel">
+        <span>
+          <span class="section-kicker">BOARDING</span>
+          <span class="section-title" id="flights-title">航班行程</span>
+        </span>
+        <span class="flight-toggle-meta">
+          <span class="section-index" id="flight-index" aria-live="polite">1 / 3</span>
+          <span class="flight-toggle-icon" aria-hidden="true">+</span>
+        </span>
+      </button>
+      <div class="flight-panel" id="flight-panel" hidden>
+        <div class="flight-carousel" id="flight-carousel" aria-label="航班卡片，可左右滑动"></div>
+        <div class="carousel-dots" id="flight-dots" aria-hidden="true"></div>
       </div>
-      <div class="flight-carousel" id="flight-carousel" aria-label="航班卡片，可左右滑动"></div>
-      <div class="carousel-dots" id="flight-dots" aria-hidden="true"></div>
     </section>
 
     <section class="section route-section" id="route" aria-labelledby="route-title" data-module="overview" hidden>

@@ -3,6 +3,7 @@ const state = {
   config: null,
   runtimeAdapters: {},
   expandedDay: null,
+  flightsExpanded: false,
   countdownTimer: null,
   purchasedTickets: new Set(),
   todos: [],
@@ -331,6 +332,18 @@ function flightCard(journey, index) {
 
 function renderFlights() {
   const journeys = state.data.flightJourneys;
+  const toggle = $("#flight-section-toggle");
+  const panel = $("#flight-panel");
+  const icon = $(".flight-toggle-icon", toggle);
+  toggle.setAttribute("aria-expanded", String(state.flightsExpanded));
+  panel.hidden = !state.flightsExpanded;
+  if (icon) icon.textContent = state.flightsExpanded ? "−" : "+";
+  toggle.onclick = () => {
+    state.flightsExpanded = !state.flightsExpanded;
+    toggle.setAttribute("aria-expanded", String(state.flightsExpanded));
+    panel.hidden = !state.flightsExpanded;
+    if (icon) icon.textContent = state.flightsExpanded ? "−" : "+";
+  };
   $("#flight-carousel").innerHTML = journeys.map(flightCard).join("");
   $("#flight-dots").innerHTML = journeys.map((_, index) => `<span class="carousel-dot${index === 0 ? " is-active" : ""}"></span>`).join("");
   $("#flight-index").textContent = `1 / ${journeys.length}`;
