@@ -1,0 +1,994 @@
+{
+  "$schema": "./schemas/trip-data.schema.json",
+  "schemaVersion": "2.0-lite",
+  "config": {
+    "schemaVersion": "1.0.0",
+    "modules": {
+      "flights": true,
+      "overview": true,
+      "itinerary": true,
+      "todo": true,
+      "driving": true,
+      "ledger": true
+    },
+    "language": "zh-CN",
+    "persistence": {
+      "mode": "d1",
+      "apiBase": "/api/trip",
+      "sharedCollections": [
+        "todos",
+        "tickets",
+        "ledger"
+      ]
+    }
+  },
+  "metadata": {
+    "tripId": "tahoe-ski-2027",
+    "title": "Tahoe 滑雪旅行计划",
+    "language": "zh-CN",
+    "assets": {
+      "routeMaps": [
+        "assets/maps/templates/template-07-compact-basin.webp"
+      ]
+    }
+  },
+  "trip": {
+    "status": "draft",
+    "startDate": "2027-01-16",
+    "endDate": "2027-01-23",
+    "dayCount": 8,
+    "nightCountAway": 7,
+    "countries": [
+      "美国"
+    ],
+    "primaryDestinationCountries": [
+      "美国"
+    ],
+    "primaryDestinationName": "Tahoe",
+    "citiesAndAreas": [
+      "Reno",
+      "Mammoth Lakes",
+      "Sierra-at-Tahoe",
+      "Palisades Tahoe"
+    ],
+    "routeSummary": "New York - Reno - Mammoth - Sierra-at-Tahoe - Palisades Tahoe - Reno - New York",
+    "groupSize": null
+  },
+  "flightJourneys": [
+    {
+      "id": "outbound-jfk-rno",
+      "title": "去程：New York (JFK) 到 Reno (RNO)",
+      "summary": "Delta，1 次中转，航班号和中转机场待确认。"
+    },
+    {
+      "id": "return-rno-lga",
+      "title": "返程：Reno (RNO) 到 New York (LGA)",
+      "summary": "Delta，1 次中转，返程抵达机场为 LGA，航班号和中转机场待确认。"
+    }
+  ],
+  "flights": [
+    {
+      "id": "flight-outbound-1",
+      "journeyId": "outbound-jfk-rno",
+      "sequence": 1,
+      "airline": {
+        "name": "Delta"
+      },
+      "flightNumber": "待确认",
+      "duration": "8h 1m",
+      "stops": "1 stop",
+      "status": "pending",
+      "missingFields": [
+        "flightNumber",
+        "connectionAirport"
+      ],
+      "departure": {
+        "airportCode": "JFK",
+        "city": "New York",
+        "date": "2027-01-16",
+        "time": "06:30",
+        "utcOffset": "-05:00"
+      },
+      "arrival": {
+        "airportCode": "RNO",
+        "city": "Reno",
+        "date": "2027-01-16",
+        "time": "11:31",
+        "utcOffset": "-08:00"
+      }
+    },
+    {
+      "id": "flight-return-1",
+      "journeyId": "return-rno-lga",
+      "sequence": 1,
+      "airline": {
+        "name": "Delta"
+      },
+      "flightNumber": "待确认",
+      "duration": "7h 52m",
+      "stops": "1 stop",
+      "status": "pending",
+      "missingFields": [
+        "flightNumber",
+        "connectionAirport"
+      ],
+      "departure": {
+        "airportCode": "RNO",
+        "city": "Reno",
+        "date": "2027-01-23",
+        "time": "22:50",
+        "utcOffset": "-08:00"
+      },
+      "arrival": {
+        "airportCode": "LGA",
+        "city": "New York",
+        "date": "2027-01-24",
+        "time": "09:42",
+        "utcOffset": "-05:00"
+      },
+      "notes": [
+        "返程抵达机场与去程出发机场不同：LGA。"
+      ]
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "stay-mammoth-area",
+      "name": "Mammoth 附近住宿",
+      "location": "Mammoth Lakes / Mammoth Mountain 附近",
+      "checkIn": "2027-01-16",
+      "checkOut": "2027-01-19",
+      "status": "待预订"
+    },
+    {
+      "id": "stay-sierra-area",
+      "name": "Sierra-at-Tahoe 附近住宿",
+      "location": "Sierra-at-Tahoe 附近",
+      "checkIn": "2027-01-19",
+      "checkOut": "2027-01-21",
+      "status": "待预订"
+    },
+    {
+      "id": "stay-palisades-area",
+      "name": "Palisades Tahoe 附近住宿",
+      "location": "Palisades Tahoe / Olympic Valley 附近",
+      "checkIn": "2027-01-21",
+      "checkOut": "2027-01-23",
+      "status": "待预订"
+    }
+  ],
+  "groundTransport": {
+    "rentalCar": {
+      "company": "待确认",
+      "rentalPeriodDays": 8,
+      "vehicle": {
+        "example": "待确认",
+        "class": "雪地自驾适合车型待确认"
+      },
+      "unlimitedKilometers": null,
+      "price": {
+        "currency": "USD",
+        "payAtCounter": null
+      },
+      "insurance": [],
+      "pickup": {
+        "date": "2027-01-16",
+        "time": "到达 RNO 后",
+        "location": "Reno-Tahoe International Airport (RNO)",
+        "address": "待确认",
+        "utcOffset": "-08:00"
+      },
+      "dropoff": {
+        "date": "2027-01-23",
+        "time": "返程航班前",
+        "timeZoneLabel": "Pacific Time",
+        "vehicleReturnPoint": "Reno-Tahoe International Airport (RNO)",
+        "deadlineWarning": "返程航班 22:50 起飞，建议预留还车和安检时间。",
+        "recommendedArrivalTime": "待确认",
+        "utcOffset": "-08:00"
+      }
+    },
+    "rentalChecklist": [],
+    "drivingNotes": [
+      "1/16 到达 Reno 后取车，开往 Mammoth 附近。",
+      "1/19 Mammoth 滑雪结束后开往 Sierra-at-Tahoe 附近。",
+      "1/21 Sierra 滑雪结束后开往 Palisades Tahoe 附近。",
+      "1/23 Palisades 滑雪结束后返回 Reno 机场还车。"
+    ],
+    "drivingReferenceLinks": [],
+    "plannedRoadLegs": [
+      {
+        "id": "drive-rno-mammoth",
+        "date": "2027-01-16",
+        "from": "Reno-Tahoe International Airport (RNO)",
+        "to": "Mammoth Lakes / Mammoth Mountain 附近",
+        "status": "待确认具体路线与住宿地址"
+      },
+      {
+        "id": "drive-mammoth-sierra",
+        "date": "2027-01-19",
+        "from": "Mammoth Mountain",
+        "to": "Sierra-at-Tahoe 附近",
+        "status": "待确认具体路线与住宿地址"
+      },
+      {
+        "id": "drive-sierra-palisades",
+        "date": "2027-01-21",
+        "from": "Sierra-at-Tahoe",
+        "to": "Palisades Tahoe 附近",
+        "status": "待确认具体路线与住宿地址"
+      },
+      {
+        "id": "drive-palisades-rno",
+        "date": "2027-01-23",
+        "from": "Palisades Tahoe",
+        "to": "Reno-Tahoe International Airport (RNO)",
+        "status": "待确认具体路线与还车时间"
+      }
+    ],
+    "publicTransitAndRail": []
+  },
+  "days": [
+    {
+      "day": 1,
+      "date": "2027-01-16",
+      "title": "抵达 Mammoth",
+      "locations": [
+        "Reno-Tahoe International Airport",
+        "Mammoth Lakes"
+      ],
+      "schedule": [
+        {
+          "id": "d1-flight-arrival",
+          "time": "11:31",
+          "type": "flight",
+          "text": "抵达 Reno (RNO)。航班号和中转机场待确认。",
+          "placeId": "reno-airport"
+        },
+        {
+          "id": "d1-car-pickup",
+          "time": "到达后",
+          "type": "drive",
+          "text": "在 RNO 附近取租车，租车公司和车型待确认。",
+          "placeId": "reno-airport"
+        },
+        {
+          "id": "d1-drive-mammoth",
+          "time": "下午",
+          "type": "drive",
+          "text": "自驾前往 Mammoth 附近住宿区域。",
+          "placeIds": [
+            "reno-airport",
+            "mammoth-lakes"
+          ]
+        },
+        {
+          "id": "d1-checkin",
+          "time": "晚上",
+          "type": "check-in",
+          "text": "入住 Mammoth 附近住宿，酒店待预订。",
+          "placeId": "mammoth-lakes"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "date": "2027-01-17",
+      "title": "Mammoth 滑雪",
+      "locations": [
+        "Mammoth Mountain"
+      ],
+      "schedule": [
+        {
+          "id": "d2-ski-mammoth",
+          "time": "全天",
+          "type": "attraction",
+          "text": "Mammoth Mountain 滑雪。",
+          "placeId": "mammoth-mountain"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2027-01-18",
+      "title": "Mammoth 滑雪",
+      "locations": [
+        "Mammoth Mountain"
+      ],
+      "schedule": [
+        {
+          "id": "d3-ski-mammoth",
+          "time": "全天",
+          "type": "attraction",
+          "text": "Mammoth Mountain 滑雪。",
+          "placeId": "mammoth-mountain"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "date": "2027-01-19",
+      "title": "转场 Sierra",
+      "locations": [
+        "Mammoth Mountain",
+        "Sierra-at-Tahoe"
+      ],
+      "schedule": [
+        {
+          "id": "d4-ski-mammoth",
+          "time": "白天",
+          "type": "attraction",
+          "text": "Mammoth Mountain 滑雪。",
+          "placeId": "mammoth-mountain"
+        },
+        {
+          "id": "d4-drive-sierra",
+          "time": "滑雪结束后",
+          "type": "drive",
+          "text": "开车前往 Sierra-at-Tahoe 附近住宿区域。",
+          "placeIds": [
+            "mammoth-mountain",
+            "sierra-at-tahoe"
+          ]
+        },
+        {
+          "id": "d4-checkin-sierra",
+          "time": "晚上",
+          "type": "check-in",
+          "text": "入住 Sierra-at-Tahoe 附近住宿，酒店待预订。",
+          "placeId": "sierra-at-tahoe"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "date": "2027-01-20",
+      "title": "Sierra-at-Tahoe 滑雪",
+      "locations": [
+        "Sierra-at-Tahoe"
+      ],
+      "schedule": [
+        {
+          "id": "d5-ski-sierra",
+          "time": "全天",
+          "type": "attraction",
+          "text": "Sierra-at-Tahoe 滑雪。",
+          "placeId": "sierra-at-tahoe"
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "date": "2027-01-21",
+      "title": "转场 Palisades",
+      "locations": [
+        "Sierra-at-Tahoe",
+        "Palisades Tahoe"
+      ],
+      "schedule": [
+        {
+          "id": "d6-ski-sierra",
+          "time": "白天",
+          "type": "attraction",
+          "text": "Sierra-at-Tahoe 滑雪。",
+          "placeId": "sierra-at-tahoe"
+        },
+        {
+          "id": "d6-drive-palisades",
+          "time": "滑雪结束后",
+          "type": "drive",
+          "text": "开车前往 Palisades Tahoe 附近住宿区域。",
+          "placeIds": [
+            "sierra-at-tahoe",
+            "palisades-tahoe"
+          ]
+        },
+        {
+          "id": "d6-checkin-palisades",
+          "time": "晚上",
+          "type": "check-in",
+          "text": "入住 Palisades Tahoe 附近住宿，酒店待预订。",
+          "placeId": "palisades-tahoe"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "date": "2027-01-22",
+      "title": "Palisades Tahoe 滑雪",
+      "locations": [
+        "Palisades Tahoe"
+      ],
+      "schedule": [
+        {
+          "id": "d7-ski-palisades",
+          "time": "全天",
+          "type": "attraction",
+          "text": "Palisades Tahoe 滑雪。",
+          "placeId": "palisades-tahoe"
+        }
+      ]
+    },
+    {
+      "day": 8,
+      "date": "2027-01-23",
+      "title": "滑雪返程",
+      "locations": [
+        "Palisades Tahoe",
+        "Reno-Tahoe International Airport"
+      ],
+      "schedule": [
+        {
+          "id": "d8-ski-palisades",
+          "time": "白天",
+          "type": "attraction",
+          "text": "Palisades Tahoe 滑雪。",
+          "placeId": "palisades-tahoe"
+        },
+        {
+          "id": "d8-drive-rno",
+          "time": "滑雪结束后",
+          "type": "drive",
+          "text": "开车返回 Reno 机场，还车时间待确认。",
+          "placeIds": [
+            "palisades-tahoe",
+            "reno-airport"
+          ]
+        },
+        {
+          "id": "d8-return-flight",
+          "time": "22:50",
+          "type": "flight",
+          "text": "从 Reno (RNO) 搭乘 Delta 返程前往 New York (LGA)，1 次中转，航班号待确认。",
+          "placeId": "reno-airport"
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "reno-airport",
+      "name": "Reno-Tahoe International Airport",
+      "nameZh": "Reno-Tahoe International Airport (RNO)",
+      "city": "Reno",
+      "countryCode": "US",
+      "lat": 39.4991,
+      "lng": -119.7681
+    },
+    {
+      "id": "mammoth-lakes",
+      "name": "Mammoth Lakes",
+      "nameZh": "Mammoth Lakes 住宿区域",
+      "city": "Mammoth Lakes",
+      "countryCode": "US",
+      "lat": 37.6485,
+      "lng": -118.9721
+    },
+    {
+      "id": "mammoth-mountain",
+      "name": "Mammoth Mountain",
+      "nameZh": "Mammoth Mountain",
+      "city": "Mammoth Lakes",
+      "countryCode": "US",
+      "lat": 37.6308,
+      "lng": -119.0326
+    },
+    {
+      "id": "sierra-at-tahoe",
+      "name": "Sierra-at-Tahoe",
+      "nameZh": "Sierra-at-Tahoe",
+      "city": "Twin Bridges",
+      "countryCode": "US",
+      "lat": 38.76,
+      "lng": -120.21
+    },
+    {
+      "id": "palisades-tahoe",
+      "name": "Palisades Tahoe",
+      "nameZh": "Palisades Tahoe",
+      "city": "Olympic Valley",
+      "countryCode": "US",
+      "lat": 39.1968,
+      "lng": -120.2354
+    }
+  ],
+  "restaurants": [],
+  "bookingsAndTickets": [],
+  "ticketPlanning": {
+    "statusStorage": "local",
+    "statusStorageNote": "门票状态默认只保存在当前浏览器。",
+    "items": []
+  },
+  "preTrip": {
+    "packingItems": [],
+    "preparationsExplicitlyMentioned": [],
+    "missingNote": ""
+  },
+  "mapLinks": {
+    "providedGoogleMapsLinks": [],
+    "note": "",
+    "cityLevelNavigationDisabled": false,
+    "navigationPolicy": {
+      "noNavigationTypes": [
+        "flight",
+        "note",
+        "rest"
+      ],
+      "selfNavigationTypes": [
+        "drive",
+        "return",
+        "transfer",
+        "check-in",
+        "check-out",
+        "restaurant",
+        "attraction",
+        "walk",
+        "hike"
+      ]
+    },
+    "navigationPlaces": []
+  },
+  "issuesAndUncertainties": [
+    "航班号和中转机场待确认。",
+    "租车公司、车型、取还车细节待确认。",
+    "酒店尚未预订，仅记录住宿大概区域。",
+    "用户表示不需要买票。",
+    "To Do 和记账先保持空白。"
+  ],
+  "map": {
+    "schemaVersion": "1.0-lite",
+    "mapMode": "template-auto",
+    "templateId": "auto",
+    "disclaimer": "本图仅表达地点的相对方位与路线顺序，不代表真实比例或精确地理边界。",
+    "defaultRegionId": "us-ski-route",
+    "region": {
+      "id": "us-ski-route",
+      "label": "Tahoe / Mammoth Ski Route",
+      "countryCode": "US"
+    },
+    "regions": [
+      {
+        "id": "us-ski-route",
+        "label": "Tahoe / Mammoth Ski Route",
+        "countryCode": "US"
+      }
+    ],
+    "places": [
+      {
+        "id": "reno-airport",
+        "label": "RNO",
+        "name": "Reno-Tahoe International Airport",
+        "geo": {
+          "lat": 39.4991,
+          "lng": -119.7681
+        },
+        "countryCode": "US",
+        "mapRegionId": "us-ski-route"
+      },
+      {
+        "id": "mammoth-mountain",
+        "label": "Mammoth",
+        "name": "Mammoth Mountain",
+        "geo": {
+          "lat": 37.6308,
+          "lng": -119.0326
+        },
+        "countryCode": "US",
+        "mapRegionId": "us-ski-route"
+      },
+      {
+        "id": "sierra-at-tahoe",
+        "label": "Sierra",
+        "name": "Sierra-at-Tahoe",
+        "geo": {
+          "lat": 38.76,
+          "lng": -120.21
+        },
+        "countryCode": "US",
+        "mapRegionId": "us-ski-route"
+      },
+      {
+        "id": "palisades-tahoe",
+        "label": "Palisades",
+        "name": "Palisades Tahoe",
+        "geo": {
+          "lat": 39.1968,
+          "lng": -120.2354
+        },
+        "countryCode": "US",
+        "mapRegionId": "us-ski-route"
+      }
+    ],
+    "routes": [
+      {
+        "day": 1,
+        "id": "route-rno-mammoth",
+        "title": "抵达后前往 Mammoth",
+        "placeIds": [
+          "reno-airport",
+          "mammoth-mountain"
+        ]
+      },
+      {
+        "day": 4,
+        "id": "route-mammoth-sierra",
+        "title": "Mammoth 前往 Sierra-at-Tahoe",
+        "placeIds": [
+          "mammoth-mountain",
+          "sierra-at-tahoe"
+        ]
+      },
+      {
+        "day": 6,
+        "id": "route-sierra-palisades",
+        "title": "Sierra-at-Tahoe 前往 Palisades Tahoe",
+        "placeIds": [
+          "sierra-at-tahoe",
+          "palisades-tahoe"
+        ]
+      },
+      {
+        "day": 8,
+        "id": "route-palisades-rno",
+        "title": "Palisades Tahoe 返回 Reno",
+        "placeIds": [
+          "palisades-tahoe",
+          "reno-airport"
+        ]
+      }
+    ],
+    "dailyRoutes": [
+      {
+        "day": 1,
+        "placeIds": [
+          "reno-airport",
+          "mammoth-mountain"
+        ],
+        "scheduleItems": [
+          "d1-drive-mammoth"
+        ]
+      },
+      {
+        "day": 4,
+        "placeIds": [
+          "mammoth-mountain",
+          "sierra-at-tahoe"
+        ],
+        "scheduleItems": [
+          "d4-drive-sierra"
+        ]
+      },
+      {
+        "day": 6,
+        "placeIds": [
+          "sierra-at-tahoe",
+          "palisades-tahoe"
+        ],
+        "scheduleItems": [
+          "d6-drive-palisades"
+        ]
+      },
+      {
+        "day": 8,
+        "placeIds": [
+          "palisades-tahoe",
+          "reno-airport"
+        ],
+        "scheduleItems": [
+          "d8-drive-rno"
+        ]
+      }
+    ]
+  },
+  "routeMap": {
+    "defaultRegionId": "us-ski-route",
+    "regions": [
+      {
+        "id": "us-ski-route",
+        "label": "Tahoe / Mammoth Ski Route",
+        "countryCode": "US",
+        "scope": "template-schematic",
+        "mapMode": "frozen-template",
+        "templateId": "compact-basin",
+        "mapModeReason": "north-south-route",
+        "mapModeMetrics": {
+          "placeCount": 4,
+          "geoPlaceCount": 4,
+          "widthKm": 104.09,
+          "heightKm": 207.38,
+          "spanKm": 217.36,
+          "averageNearestKm": 77.99,
+          "components": 1,
+          "largestLegKm": 217.36,
+          "jumpRatio": 1.34
+        },
+        "days": [
+          1,
+          4,
+          6,
+          8
+        ],
+        "canvas": {
+          "width": 1448,
+          "height": 1086
+        },
+        "projection": {
+          "type": "relative-schematic",
+          "bounds": null
+        },
+        "baseImage": "assets/maps/templates/template-07-compact-basin.webp",
+        "title": "Tahoe / Mammoth Ski Route · 旅行路线",
+        "ariaLabel": "Tahoe / Mammoth Ski Route模板化旅行路线示意图，共4天",
+        "disclaimer": "本图仅表达地点的相对方位与路线顺序，不代表真实比例或精确地理边界。",
+        "heading": {
+          "text": "Tahoe / Mammoth Ski Route",
+          "x": 33,
+          "y": 105,
+          "size": 40
+        },
+        "legend": {
+          "x": 35,
+          "y": 168,
+          "gap": 43
+        },
+        "annotations": [],
+        "routes": [
+          {
+            "day": 1,
+            "color": "#397dc1",
+            "placeIds": [
+              "reno-airport",
+              "mammoth-mountain"
+            ],
+            "paths": [
+              "M696.63 316.2 C768.9 449.4 812.5 591.4 824.8 733.8"
+            ],
+            "overviewPaths": [
+              "M696.63 316.2 C768.9 449.4 812.5 591.4 824.8 733.8"
+            ]
+          },
+          {
+            "day": 4,
+            "color": "#209aaa",
+            "placeIds": [
+              "mammoth-mountain",
+              "sierra-at-tahoe"
+            ],
+            "paths": [
+              "M824.8 733.8 C778.3 629.7 708.5 544.5 619.71 483.42"
+            ],
+            "overviewPaths": [
+              "M824.8 733.8 C778.3 629.7 708.5 544.5 619.71 483.42"
+            ]
+          },
+          {
+            "day": 6,
+            "color": "#df6185",
+            "placeIds": [
+              "sierra-at-tahoe",
+              "palisades-tahoe"
+            ],
+            "paths": [
+              "M619.71 483.42 C628.3 448.4 626.7 413.8 615.11 381.75"
+            ],
+            "overviewPaths": [
+              "M619.71 483.42 C628.3 448.4 626.7 413.8 615.11 381.75"
+            ]
+          },
+          {
+            "day": 8,
+            "color": "#e77e22",
+            "placeIds": [
+              "palisades-tahoe",
+              "reno-airport"
+            ],
+            "paths": [
+              "M615.11 381.75 C649.4 367.6 677.1 345.3 696.63 316.2"
+            ],
+            "overviewPaths": [
+              "M615.11 381.75 C649.4 367.6 677.1 345.3 696.63 316.2"
+            ]
+          }
+        ],
+        "places": [
+          {
+            "id": "reno-airport",
+            "x": 696.63,
+            "y": 316.2,
+            "color": "#397dc1",
+            "tx": 728.63,
+            "ty": 284.2,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Reno-Tahoe International Airport"
+            ],
+            "query": "Reno-Tahoe International Airport Tahoe / Mammoth Ski Route",
+            "geo": {
+              "lat": 39.4991,
+              "lng": -119.7681
+            },
+            "days": [
+              1,
+              8
+            ]
+          },
+          {
+            "id": "mammoth-mountain",
+            "x": 824.8,
+            "y": 733.8,
+            "color": "#397dc1",
+            "tx": 792.8,
+            "ty": 701.8,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Mammoth Mountain"
+            ],
+            "query": "Mammoth Mountain Tahoe / Mammoth Ski Route",
+            "geo": {
+              "lat": 37.6308,
+              "lng": -119.0326
+            },
+            "days": [
+              1,
+              4
+            ]
+          },
+          {
+            "id": "sierra-at-tahoe",
+            "x": 619.71,
+            "y": 483.42,
+            "color": "#209aaa",
+            "tx": 697.71,
+            "ty": 421.42,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Sierra-at-Tahoe"
+            ],
+            "query": "Sierra-at-Tahoe Tahoe / Mammoth Ski Route",
+            "geo": {
+              "lat": 38.76,
+              "lng": -120.21
+            },
+            "days": [
+              4,
+              6
+            ]
+          },
+          {
+            "id": "palisades-tahoe",
+            "x": 615.11,
+            "y": 381.75,
+            "color": "#df6185",
+            "tx": 537.11,
+            "ty": 457.75,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Palisades Tahoe"
+            ],
+            "query": "Palisades Tahoe Tahoe / Mammoth Ski Route",
+            "geo": {
+              "lat": 39.1968,
+              "lng": -120.2354
+            },
+            "days": [
+              6,
+              8
+            ]
+          }
+        ],
+        "overviewPlaceIds": [
+          "reno-airport",
+          "mammoth-mountain",
+          "sierra-at-tahoe",
+          "palisades-tahoe"
+        ],
+        "dailyLayouts": {
+          "1": {
+            "places": [
+              "reno-airport",
+              "mammoth-mountain"
+            ],
+            "labels": {
+              "reno-airport": {
+                "x": 728.63,
+                "y": 284.2,
+                "anchor": "start"
+              },
+              "mammoth-mountain": {
+                "x": 792.8,
+                "y": 701.8,
+                "anchor": "end"
+              }
+            },
+            "transport": [
+              {
+                "items": "d1-drive-mammoth",
+                "x": 760.71,
+                "y": 525
+              }
+            ]
+          },
+          "4": {
+            "places": [
+              "mammoth-mountain",
+              "sierra-at-tahoe"
+            ],
+            "labels": {
+              "mammoth-mountain": {
+                "x": 792.8,
+                "y": 701.8,
+                "anchor": "end"
+              },
+              "sierra-at-tahoe": {
+                "x": 697.71,
+                "y": 421.42,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": "d4-drive-sierra",
+                "x": 722.25,
+                "y": 608.61
+              }
+            ]
+          },
+          "6": {
+            "places": [
+              "sierra-at-tahoe",
+              "palisades-tahoe"
+            ],
+            "labels": {
+              "sierra-at-tahoe": {
+                "x": 697.71,
+                "y": 421.42,
+                "anchor": "start"
+              },
+              "palisades-tahoe": {
+                "x": 537.11,
+                "y": 457.75,
+                "anchor": "end"
+              }
+            },
+            "transport": [
+              {
+                "items": "d6-drive-palisades",
+                "x": 617.41,
+                "y": 432.59
+              }
+            ]
+          },
+          "8": {
+            "places": [
+              "palisades-tahoe",
+              "reno-airport"
+            ],
+            "labels": {
+              "palisades-tahoe": {
+                "x": 537.11,
+                "y": 457.75,
+                "anchor": "end"
+              },
+              "reno-airport": {
+                "x": 728.63,
+                "y": 284.2,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": "d8-drive-rno",
+                "x": 655.87,
+                "y": 348.98
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
