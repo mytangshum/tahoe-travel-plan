@@ -16,4 +16,8 @@ CREATE TABLE IF NOT EXISTS trip_tickets (
   id TEXT NOT NULL, trip_id TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL,
   payload TEXT NOT NULL, PRIMARY KEY (trip_id, id)
 );
+CREATE TABLE IF NOT EXISTS trip_itinerary (
+  id TEXT NOT NULL, trip_id TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL,
+  payload TEXT NOT NULL, PRIMARY KEY (trip_id, id)
+);
 CREATE INDEX IF NOT EXISTS idx_ledger_bills_trip ON ledger_bills(trip_id, created_at);

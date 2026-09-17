@@ -18,6 +18,7 @@
       "sharedCollections": [
         "todos",
         "tickets",
+        "itinerary",
         "ledger"
       ]
     }

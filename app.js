@@ -5,11 +5,12 @@ const state = {
   expandedDay: null,
   countdownTimer: null,
   purchasedTickets: new Set(),
-  todos: []
+  todos: [],
+  itineraryEdits: new Map()
 };
 
 const MODULE_NAMES = Object.freeze(["flights", "overview", "itinerary", "todo", "driving", "ledger"]);
-const SHARED_COLLECTIONS = Object.freeze(["todos", "tickets", "ledger"]);
+const SHARED_COLLECTIONS = Object.freeze(["todos", "tickets", "itinerary", "ledger"]);
 
 function normalizeTripConfig(raw = {}) {
   if (!raw || typeof raw !== "object" || raw.schemaVersion !== "1.0.0") throw new Error("trip-data.json config.schemaVersion must be 1.0.0");
@@ -484,12 +485,135 @@ function dayCard(day) {
         <span class="day-chevron" aria-hidden="true">+</span>
       </button>
       <div class="day-detail" id="day-detail-${day.day}" ${expanded ? "" : "hidden"}>
+        <div class="itinerary-edit-actions">
+          <button type="button" class="itinerary-edit-button" data-itinerary-edit="${day.day}">编辑这一天</button>
+        </div>
         <ol class="schedule">${schedule}</ol>
         ${costs ? `<div class="costs">${costs}</div>` : ""}
         ${notes.map((note) => `<p class="detail-note">${escapeHtml(note)}</p>`).join("")}
       </div>
     </article>
   `;
+}
+
+function editableScheduleItemMarkup(item, index) {
+  return `
+    <div class="itinerary-editor-row" data-schedule-index="${index}">
+      <input class="itinerary-editor-time" value="${escapeHtml(item.time || "")}" maxlength="24" aria-label="行程时间">
+      <textarea class="itinerary-editor-text" maxlength="220" rows="2" aria-label="行程内容">${escapeHtml(item.text || "")}</textarea>
+      <button type="button" class="itinerary-editor-delete" data-itinerary-delete-item>删除</button>
+    </div>
+  `;
+}
+
+function dayRecord(day) {
+  return {
+    id: `day-${day.day}`,
+    day: day.day,
+    date: day.date,
+    title: day.title,
+    locations: Array.isArray(day.locations) ? day.locations : [],
+    schedule: (day.schedule || []).map((item) => ({
+      id: item.id || `item-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+      time: item.time || "",
+      type: item.type || "note",
+      text: item.text || "",
+      ...(item.placeId ? { placeId: item.placeId } : {}),
+      ...(Array.isArray(item.placeIds) ? { placeIds: item.placeIds } : {}),
+      ...(Array.isArray(item.ticketIds) ? { ticketIds: item.ticketIds } : {})
+    })),
+    updatedAt: new Date().toISOString()
+  };
+}
+
+function applyItineraryRecords(records) {
+  state.itineraryEdits = new Map();
+  (records || []).forEach((record) => {
+    const dayNumber = Number(record.day || String(record.id || "").replace(/^day-/, ""));
+    if (!Number.isInteger(dayNumber)) return;
+    const day = state.data.days.find((entry) => entry.day === dayNumber);
+    if (!day) return;
+    if (typeof record.title === "string" && record.title.trim()) day.title = record.title.trim();
+    if (Array.isArray(record.locations)) day.locations = record.locations.map((item) => String(item).trim()).filter(Boolean);
+    if (Array.isArray(record.schedule)) {
+      day.schedule = record.schedule.map((item, index) => ({
+        id: String(item.id || `d${dayNumber}-custom-${index + 1}`),
+        time: String(item.time || "").trim() || "待定",
+        type: String(item.type || "note"),
+        text: String(item.text || "").trim() || "待补充",
+        ...(item.placeId ? { placeId: item.placeId } : {}),
+        ...(Array.isArray(item.placeIds) ? { placeIds: item.placeIds } : {}),
+        ...(Array.isArray(item.ticketIds) ? { ticketIds: item.ticketIds } : {})
+      }));
+    }
+    state.itineraryEdits.set(dayNumber, dayRecord(day));
+  });
+}
+
+function openItineraryEditor(dayNumber) {
+  const card = $(`[data-day="${dayNumber}"]`);
+  const detail = $(`#day-detail-${dayNumber}`);
+  const day = state.data.days.find((entry) => entry.day === dayNumber);
+  if (!card || !detail || !day) return;
+  const editor = document.createElement("form");
+  editor.className = "itinerary-editor";
+  editor.dataset.itineraryEditor = String(dayNumber);
+  editor.innerHTML = `
+    <label>
+      <span>标题</span>
+      <input name="title" value="${escapeHtml(day.title || "")}" maxlength="60">
+    </label>
+    <label>
+      <span>地点</span>
+      <input name="locations" value="${escapeHtml((day.locations || []).join(" → "))}" maxlength="160">
+    </label>
+    <div class="itinerary-editor-list">
+      ${(day.schedule || []).map(editableScheduleItemMarkup).join("")}
+    </div>
+    <div class="itinerary-editor-footer">
+      <button type="button" data-itinerary-add-item>新增行程</button>
+      <span></span>
+      <button type="button" data-itinerary-cancel>取消</button>
+      <button type="submit">保存同步</button>
+    </div>
+  `;
+  const existing = $(".itinerary-editor", detail);
+  if (existing) existing.remove();
+  detail.prepend(editor);
+  $(".schedule", detail).hidden = true;
+  $(".itinerary-edit-actions", detail).hidden = true;
+}
+
+function closeItineraryEditor(dayNumber) {
+  const detail = $(`#day-detail-${dayNumber}`);
+  if (!detail) return;
+  $(".itinerary-editor", detail)?.remove();
+  const schedule = $(".schedule", detail);
+  if (schedule) schedule.hidden = false;
+  const actions = $(".itinerary-edit-actions", detail);
+  if (actions) actions.hidden = false;
+}
+
+async function saveItineraryEditor(form) {
+  const dayNumber = Number(form.dataset.itineraryEditor);
+  const day = state.data.days.find((entry) => entry.day === dayNumber);
+  if (!day) return;
+  const title = form.elements.title.value.trim() || day.title;
+  const locations = form.elements.locations.value.split("→").map((item) => item.trim()).filter(Boolean);
+  const schedule = $$(".itinerary-editor-row", form).map((row, index) => ({
+    id: day.schedule[index]?.id || `d${dayNumber}-custom-${Date.now()}-${index + 1}`,
+    time: $(".itinerary-editor-time", row).value.trim() || "待定",
+    type: day.schedule[index]?.type || "note",
+    text: $(".itinerary-editor-text", row).value.trim() || "待补充"
+  }));
+  day.title = title;
+  day.locations = locations.length ? locations : day.locations;
+  day.schedule = schedule;
+  const record = dayRecord(day);
+  state.itineraryEdits.set(dayNumber, record);
+  await saveSharedChange("itinerary", record);
+  state.expandedDay = dayNumber;
+  renderTimeline();
 }
 
 function navigationDestinations(item) {
@@ -575,6 +699,27 @@ function renderTimeline() {
       openTicketDialog(ticketButton.dataset.ticketOpen, ticketButton);
       return;
     }
+    const editButton = event.target.closest("[data-itinerary-edit]");
+    if (editButton) {
+      openItineraryEditor(Number(editButton.dataset.itineraryEdit));
+      return;
+    }
+    const addButton = event.target.closest("[data-itinerary-add-item]");
+    if (addButton) {
+      const list = addButton.closest(".itinerary-editor").querySelector(".itinerary-editor-list");
+      list.insertAdjacentHTML("beforeend", editableScheduleItemMarkup({ time: "待定", text: "" }, list.children.length));
+      return;
+    }
+    const deleteButton = event.target.closest("[data-itinerary-delete-item]");
+    if (deleteButton) {
+      deleteButton.closest(".itinerary-editor-row").remove();
+      return;
+    }
+    const cancelButton = event.target.closest("[data-itinerary-cancel]");
+    if (cancelButton) {
+      closeItineraryEditor(Number(cancelButton.closest(".itinerary-editor").dataset.itineraryEditor));
+      return;
+    }
     const toggle = event.target.closest(".day-toggle");
     if (!toggle) return;
     const card = toggle.closest(".day-card");
@@ -589,6 +734,12 @@ function renderTimeline() {
     } else {
       state.expandedDay = null;
     }
+  };
+  $("#timeline").onsubmit = (event) => {
+    const form = event.target.closest(".itinerary-editor");
+    if (!form) return;
+    event.preventDefault();
+    saveItineraryEditor(form).catch(console.error);
   };
   $("#timeline").onchange = (event) => {
     const checkbox = event.target.closest(".schedule-ticket input[type='checkbox']");
@@ -729,7 +880,7 @@ function createRuntimeAdapters() {
   const tripId = state.data.metadata.tripId;
   const enabledCollections = [
     ...(moduleEnabled("todo") ? ["todos"] : []),
-    ...(moduleEnabled("itinerary") ? ["tickets"] : [])
+    ...(moduleEnabled("itinerary") ? ["tickets", "itinerary"] : [])
   ];
   const localCollections = enabledCollections.filter((collection) => persistence.mode !== "d1" || !sharedCollections.has(collection));
   const d1Collections = enabledCollections.filter((collection) => persistence.mode === "d1" && sharedCollections.has(collection));
@@ -757,8 +908,10 @@ async function loadSharedState() {
   const snapshotFor = (collection) => snapshots.find(([adapter]) => adapter === state.runtimeAdapters[collection])?.[1] || {};
   const todoSnapshot = snapshotFor("todos");
   const ticketSnapshot = snapshotFor("tickets");
+  const itinerarySnapshot = snapshotFor("itinerary");
   state.todos = Array.isArray(todoSnapshot.todos) ? todoSnapshot.todos : [];
   state.purchasedTickets = new Set((Array.isArray(ticketSnapshot.tickets) ? ticketSnapshot.tickets : []).filter((item) => item.completed).map((item) => item.id));
+  applyItineraryRecords(Array.isArray(itinerarySnapshot.itinerary) ? itinerarySnapshot.itinerary : []);
   const authoredTodos = state.data.preTrip?.todoItems || state.data.preTrip?.packingItems || [];
   if (todoAdapter?.mode === "local" && !hasLocalTodoSnapshot && !state.todos.length && authoredTodos.length) {
     state.todos = authoredTodos.map((item, index) => ({

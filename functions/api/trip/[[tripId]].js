@@ -3,7 +3,7 @@ const json = (body, status = 200) => new Response(JSON.stringify(body), {
   headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" }
 });
 
-const table = { bills: "ledger_bills", travelers: "ledger_travelers", todos: "trip_todos", tickets: "trip_tickets" };
+const table = { bills: "ledger_bills", travelers: "ledger_travelers", todos: "trip_todos", tickets: "trip_tickets", itinerary: "trip_itinerary" };
 const safeId = (value) => String(value || "").trim().slice(0, 160);
 
 async function readSnapshot(db, tripId, collections) {
@@ -14,6 +14,7 @@ async function readSnapshot(db, tripId, collections) {
     travelers: [],
     todos: [],
     tickets: [],
+    itinerary: [],
     updatedAt: new Date().toISOString()
   };
   await Promise.all(collections.map(async (collection) => {

@@ -230,6 +230,20 @@ main { overflow: hidden; }
 .schedule-text { font-size: 13px; line-height: 1.65; }
 .schedule-map-links { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 6px; }
 .schedule-map-link { min-height: 32px; padding: 6px 9px; display: inline-flex; align-items: center; border: 1px solid #c8dadc; border-radius: 999px; color: #205e6b; background: #edf6f5; text-decoration: none; font-size: 11px; font-weight: 700; }
+.itinerary-edit-actions { margin: 0 0 14px; display: flex; justify-content: flex-end; }
+.itinerary-edit-button { min-height: 36px; padding: 0 12px; border: 1px solid rgba(35,116,166,.22); border-radius: 999px; color: var(--lake); background: rgba(255,255,255,.72); cursor: pointer; font-size: 12px; font-weight: 750; }
+.itinerary-editor { margin: 0 0 18px; padding: 14px; border: 1px solid rgba(35,116,166,.22); border-radius: 16px; background: rgba(255,255,255,.82); box-shadow: 0 12px 32px rgba(24,46,68,.08); }
+.itinerary-editor label { display: grid; gap: 6px; margin-bottom: 10px; color: var(--muted); font-size: 11px; font-weight: 760; }
+.itinerary-editor input,.itinerary-editor textarea { width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: 10px; background: white; color: var(--ink); font: inherit; font-size: 13px; outline: none; }
+.itinerary-editor input { min-height: 40px; padding: 0 11px; }
+.itinerary-editor textarea { resize: vertical; padding: 10px 11px; line-height: 1.5; }
+.itinerary-editor input:focus,.itinerary-editor textarea:focus { border-color: var(--lake); box-shadow: 0 0 0 3px rgba(35,116,166,.1); }
+.itinerary-editor-list { display: grid; gap: 9px; margin-top: 12px; }
+.itinerary-editor-row { display: grid; grid-template-columns: 72px minmax(0,1fr) auto; gap: 7px; align-items: start; }
+.itinerary-editor-delete { min-height: 40px; padding: 0 9px; border: 0; border-radius: 10px; color: #9a5141; background: #fff1ed; cursor: pointer; font-size: 11px; font-weight: 740; }
+.itinerary-editor-footer { margin-top: 12px; display: grid; grid-template-columns: auto 1fr auto auto; gap: 8px; align-items: center; }
+.itinerary-editor-footer button { min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 11px; background: white; color: var(--ink); cursor: pointer; font-size: 12px; font-weight: 740; }
+.itinerary-editor-footer button[type="submit"] { border-color: var(--lake); color: white; background: var(--lake); }
 .schedule-ticket { margin-top: 9px; border: 1px solid #e8c8b8; border-radius: 12px; background: #fff8f4; overflow: hidden; }
 .schedule-ticket summary { min-height: 38px; padding: 8px 10px; display: flex; align-items: center; gap: 6px; list-style: none; color: #8f492e; cursor: pointer; font-size: 10px; font-weight: 750; }
 .schedule-ticket summary::-webkit-details-marker { display: none; }
@@ -417,6 +431,7 @@ main { overflow: hidden; }
   .section { padding-inline: 0; }
   .flight-card { flex-basis: 86%; min-height: 350px; }
   .rental-stops { grid-template-columns: 1fr 1fr; }
+  .itinerary-editor-row { grid-template-columns: 88px minmax(0,1fr) auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
