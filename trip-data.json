@@ -59,38 +59,28 @@
   },
   "flightJourneys": [
     {
-      "id": "outbound-jfk-rno",
-      "title": "去程：New York (JFK) 到 Reno (RNO)",
-      "summary": "Delta，JFK 06:30 出发，经 Salt Lake City (SLC) 中转，11:13 抵达 RNO。"
+      "id": "outbound-east-rno",
+      "title": "去程：JFK / PHL 到 Reno (RNO)",
+      "summary": "Delta，JFK / PHL 06:30 出发，经 Salt Lake City (SLC) 中转，11:13 抵达 RNO。"
     },
     {
-      "id": "outbound-phl-rno",
-      "title": "Cathy 去程：Philadelphia (PHL) 到 Reno (RNO)",
-      "summary": "Delta，PHL 06:30 出发，经 Salt Lake City (SLC) 中转，11:13 抵达 RNO。"
-    },
-    {
-      "id": "return-rno-lga",
-      "title": "返程：Reno (RNO) 到 New York (LGA)",
-      "summary": "Delta，RNO 22:50 出发，经 Atlanta (ATL) 中转，次日 09:42 抵达 LGA。"
-    },
-    {
-      "id": "return-rno-phl",
-      "title": "Cathy 返程：Reno (RNO) 到 Philadelphia (PHL)",
-      "summary": "Delta，RNO 22:50 出发，经 Atlanta (ATL) 中转，次日 09:42 抵达 PHL。"
+      "id": "return-rno-east",
+      "title": "返程：Reno (RNO) 到 LGA / PHL",
+      "summary": "Delta，RNO 22:50 出发，经 Atlanta (ATL) 中转，次日 09:42 抵达 LGA / PHL。"
     }
   ],
   "flights": [
     {
-      "id": "flight-jfk-slc",
-      "journeyId": "outbound-jfk-rno",
+      "id": "flight-east-slc",
+      "journeyId": "outbound-east-rno",
       "sequence": 1,
       "airline": {
         "name": "Delta"
       },
-      "flightNumber": "DL892",
+      "flightNumber": "DL892 / Cathy 待确认",
       "departure": {
-        "airportCode": "JFK",
-        "city": "New York",
+        "airportCode": "JFK / PHL",
+        "city": "New York / Philadelphia",
         "date": "2027-01-16",
         "time": "06:30",
         "utcOffset": "-05:00"
@@ -105,61 +95,12 @@
     },
     {
       "id": "flight-slc-rno",
-      "journeyId": "outbound-jfk-rno",
+      "journeyId": "outbound-east-rno",
       "sequence": 2,
       "airline": {
         "name": "Delta"
       },
       "flightNumber": "DL1595",
-      "connectionFromPrevious": {
-        "plannedDurationText": "SLC 中转"
-      },
-      "departure": {
-        "airportCode": "SLC",
-        "city": "Salt Lake City",
-        "date": "2027-01-16",
-        "time": "11:00",
-        "utcOffset": "-07:00"
-      },
-      "arrival": {
-        "airportCode": "RNO",
-        "city": "Reno",
-        "date": "2027-01-16",
-        "time": "11:13",
-        "utcOffset": "-08:00"
-      }
-    },
-    {
-      "id": "flight-phl-slc-cathy",
-      "journeyId": "outbound-phl-rno",
-      "sequence": 1,
-      "airline": {
-        "name": "Delta"
-      },
-      "flightNumber": "DL1595",
-      "departure": {
-        "airportCode": "PHL",
-        "city": "Philadelphia",
-        "date": "2027-01-16",
-        "time": "06:30",
-        "utcOffset": "-05:00"
-      },
-      "arrival": {
-        "airportCode": "SLC",
-        "city": "Salt Lake City",
-        "date": "2027-01-16",
-        "time": "10:01",
-        "utcOffset": "-07:00"
-      }
-    },
-    {
-      "id": "flight-slc-rno-cathy",
-      "journeyId": "outbound-phl-rno",
-      "sequence": 2,
-      "airline": {
-        "name": "Delta"
-      },
-      "flightNumber": "待确认",
       "connectionFromPrevious": {
         "plannedDurationText": "SLC 中转"
       },
@@ -180,7 +121,7 @@
     },
     {
       "id": "flight-rno-atl",
-      "journeyId": "return-rno-lga",
+      "journeyId": "return-rno-east",
       "sequence": 1,
       "airline": {
         "name": "Delta"
@@ -202,13 +143,13 @@
       }
     },
     {
-      "id": "flight-atl-lga",
-      "journeyId": "return-rno-lga",
+      "id": "flight-atl-east",
+      "journeyId": "return-rno-east",
       "sequence": 2,
       "airline": {
         "name": "Delta"
       },
-      "flightNumber": "DL789",
+      "flightNumber": "DL789 / Cathy 待确认",
       "connectionFromPrevious": {
         "plannedDurationText": "ATL 中转"
       },
@@ -220,64 +161,15 @@
         "utcOffset": "-05:00"
       },
       "arrival": {
-        "airportCode": "LGA",
-        "city": "New York",
+        "airportCode": "LGA / PHL",
+        "city": "New York / Philadelphia",
         "date": "2027-01-24",
         "time": "09:42",
         "utcOffset": "-05:00"
       },
       "notes": [
-        "返程抵达机场与去程出发机场不同：LGA。"
+        "返程抵达机场为 LGA / PHL，具体以个人机票为准。"
       ]
-    },
-    {
-      "id": "flight-rno-atl-cathy",
-      "journeyId": "return-rno-phl",
-      "sequence": 1,
-      "airline": {
-        "name": "Delta"
-      },
-      "flightNumber": "DL391",
-      "departure": {
-        "airportCode": "RNO",
-        "city": "Reno",
-        "date": "2027-01-23",
-        "time": "22:50",
-        "utcOffset": "-08:00"
-      },
-      "arrival": {
-        "airportCode": "ATL",
-        "city": "Atlanta",
-        "date": "2027-01-24",
-        "time": "06:18",
-        "utcOffset": "-05:00"
-      }
-    },
-    {
-      "id": "flight-atl-phl-cathy",
-      "journeyId": "return-rno-phl",
-      "sequence": 2,
-      "airline": {
-        "name": "Delta"
-      },
-      "flightNumber": "DL789",
-      "connectionFromPrevious": {
-        "plannedDurationText": "ATL 中转"
-      },
-      "departure": {
-        "airportCode": "ATL",
-        "city": "Atlanta",
-        "date": "2027-01-24",
-        "time": "07:30",
-        "utcOffset": "-05:00"
-      },
-      "arrival": {
-        "airportCode": "PHL",
-        "city": "Philadelphia",
-        "date": "2027-01-24",
-        "time": "09:42",
-        "utcOffset": "-05:00"
-      }
     }
   ],
   "accommodations": [
