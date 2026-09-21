@@ -206,41 +206,54 @@
   ],
   "groundTransport": {
     "rentalCar": {
-      "company": "待确认",
+      "company": "Dollar Car Rental",
       "rentalPeriodDays": 8,
       "vehicle": {
-        "example": "待确认",
-        "class": "雪地自驾适合车型待确认"
+        "example": "Nissan Pathfinder or similar",
+        "class": "Full-Size SUV · 7 seats · 1 bag"
       },
-      "unlimitedKilometers": null,
+      "unlimitedKilometers": true,
       "price": {
         "currency": "USD",
-        "payAtCounter": null
+        "payAtCounter": 466,
+        "dailyRate": 32,
+        "note": "截图参考价：$466 total for 8 days，含税费；Pay now or later。"
       },
-      "insurance": [],
+      "insurance": [
+        "免费取消：截图显示可在取车前取消。",
+        "保险、押金、驾驶员要求和冬季装备仍需下单时确认。"
+      ],
       "pickup": {
         "date": "2027-01-16",
-        "time": "到达 RNO 后",
+        "time": "13:00",
         "location": "Reno-Tahoe International Airport (RNO)",
-        "address": "待确认",
+        "address": "Car on Airport · Quick Pick-Up",
         "utcOffset": "-08:00"
       },
       "dropoff": {
-        "date": "2027-01-23",
-        "time": "返程航班前",
+        "date": "2027-01-24",
+        "time": "13:00",
         "timeZoneLabel": "Pacific Time",
         "vehicleReturnPoint": "Reno-Tahoe International Airport (RNO)",
-        "deadlineWarning": "返程航班 22:50 起飞，建议预留还车和安检时间。",
-        "recommendedArrivalTime": "待确认",
+        "deadlineWarning": "截图显示还车时间为 1/24 13:00；若实际 1/23 晚间返程，可提前还车并确认订单是否允许。",
+        "recommendedArrivalTime": "返程航班前至少 2 小时",
         "utcOffset": "-08:00"
       }
     },
-    "rentalChecklist": [],
+    "rentalChecklist": [
+      "租车平台：airportrentalcars.com。",
+      "供应商：Dollar Car Rental。",
+      "车型：Full-Size SUV，Nissan Pathfinder or similar。",
+      "取还车地点：Reno-Tahoe International Airport (RNO)，机场内取还。",
+      "人数/行李参考：7 seats · 1 bag。",
+      "里程：Unlimited Mileage。",
+      "付款方式：Pay now or later。"
+    ],
     "drivingNotes": [
-      "1/16 到达 Reno 后取车，开往 Mammoth 附近。",
+      "1/16 13:00 在 Reno-Tahoe International Airport (RNO) 取车，开往 Mammoth 附近。",
       "1/19 Mammoth 滑雪结束后开往 Sierra-at-Tahoe 附近。",
       "1/21 Sierra 滑雪结束后开往 Palisades Tahoe 附近。",
-      "1/23 Palisades 滑雪结束后返回 Reno 机场还车。"
+      "截图租车订单为 1/24 13:00 在 RNO 还车；若按 1/23 晚间航班返程，建议提前确认可否 1/23 提前还车。"
     ],
     "drivingReferenceLinks": [],
     "plannedRoadLegs": [
@@ -270,7 +283,7 @@
         "date": "2027-01-23",
         "from": "Palisades Tahoe",
         "to": "Reno-Tahoe International Airport (RNO)",
-        "status": "待确认具体路线与还车时间"
+        "status": "截图显示订单还车为 1/24 13:00；如 1/23 晚间返程，需确认提前还车规则"
       }
     ],
     "publicTransitAndRail": []
@@ -296,7 +309,7 @@
           "id": "d1-car-pickup",
           "time": "到达后",
           "type": "drive",
-          "text": "在 RNO 附近取租车，租车公司和车型待确认。",
+          "text": "在 RNO 机场取 Dollar Full-Size SUV（Nissan Pathfinder or similar），预约 13:00 取车。",
           "placeId": "reno-airport"
         },
         {
@@ -511,7 +524,7 @@
           "id": "d8-drive-rno",
           "time": "滑雪结束后",
           "type": "drive",
-          "text": "开车返回 Reno 机场，还车时间待确认。",
+          "text": "开车返回 Reno 机场；租车订单显示 1/24 13:00 还车，如 1/23 晚间返程需确认提前还车规则。",
           "placeIds": [
             "palisades-tahoe",
             "reno-airport"
@@ -651,7 +664,7 @@
   },
   "issuesAndUncertainties": [
     "航班号和中转机场待确认。",
-    "租车公司、车型、取还车细节待确认。",
+    "租车已按截图更新；保险、押金、驾驶员要求、冬季装备和提前还车规则仍需下单时确认。",
     "住宿已根据截图更新；确认号、PIN、邮箱、订单号等敏感信息未写入网页。",
     "用户表示不需要买票。",
     "To Do 和记账先保持空白。"
