@@ -239,6 +239,61 @@
     }
   }
 
+  function normalizeReceiptImage(value) {
+    if (!value || typeof value !== "object") return null;
+    const dataUrl = String(value.dataUrl || "");
+    if (!/^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/.test(dataUrl)) return null;
+    return {
+      dataUrl,
+      name: String(value.name || "receipt").trim().slice(0, 80),
+      type: String(value.type || "image/jpeg").trim().slice(0, 40),
+      createdAt: typeof value.createdAt === "string" ? value.createdAt : new Date().toISOString()
+    };
+  }
+
+  function readImageFile(file, options = {}) {
+    const maxSize = options.maxSize || 1100;
+    const quality = options.quality || 0.72;
+    const maxBytes = options.maxBytes || 420000;
+    return new Promise((resolve, reject) => {
+      if (!file) return resolve(null);
+      if (!/^image\/(?:jpeg|png|webp)$/i.test(file.type)) {
+        reject(new Error("请选择 JPG、PNG 或 WebP 图片。"));
+        return;
+      }
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error("图片读取失败，请重试。"));
+      reader.onload = () => {
+        const image = new Image();
+        image.onerror = () => reject(new Error("图片无法识别，请换一张截图。"));
+        image.onload = () => {
+          const scale = Math.min(1, maxSize / Math.max(image.naturalWidth, image.naturalHeight));
+          const width = Math.max(1, Math.round(image.naturalWidth * scale));
+          const height = Math.max(1, Math.round(image.naturalHeight * scale));
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const context = canvas.getContext("2d");
+          context.drawImage(image, 0, 0, width, height);
+          let dataUrl = canvas.toDataURL("image/jpeg", quality);
+          if (dataUrl.length > maxBytes) dataUrl = canvas.toDataURL("image/jpeg", 0.55);
+          if (dataUrl.length > maxBytes) {
+            reject(new Error("截图压缩后仍然太大，请裁剪后再上传。"));
+            return;
+          }
+          resolve({
+            dataUrl,
+            name: String(file.name || "receipt").slice(0, 80),
+            type: "image/jpeg",
+            createdAt: new Date().toISOString()
+          });
+        };
+        image.src = String(reader.result || "");
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
   function defaultData() {
     return {
       version: STORAGE_VERSION,
@@ -297,6 +352,7 @@
         orderedAt: typeof bill.orderedAt === "string" ? bill.orderedAt : "",
         payerId,
         participantIds,
+        receiptImage: normalizeReceiptImage(bill.receiptImage),
         createdAt: typeof bill.createdAt === "string" ? bill.createdAt : new Date().toISOString(),
         updatedAt: typeof bill.updatedAt === "string" ? bill.updatedAt : new Date().toISOString()
       }];
@@ -701,6 +757,18 @@
               <input class="ledger-input" type="datetime-local" name="orderedAt" value="${escapeAttribute(editingBill?.orderedAt || draft?.orderedAt || "")}">
             </label>
 
+            <label class="ledger-field ledger-receipt-field">
+              <span class="ledger-field-label">截图 <small>选填</small></span>
+              <input class="ledger-receipt-input" type="file" name="receiptImage" accept="image/*">
+              <span class="ledger-receipt-button">${editingBill?.receiptImage ? "替换截图" : "上传截图"}</span>
+              <span class="ledger-field-help">${editingBill?.receiptImage ? "已保存截图；不重新选择会保留原图。" : "支持 JPG / PNG / WebP，会自动压缩后同步。"}</span>
+            </label>
+            ${editingBill?.receiptImage ? `
+              <label class="ledger-receipt-remove">
+                <input type="checkbox" name="removeReceiptImage" value="1">
+                <span>删除已保存截图</span>
+              </label>` : ""}
+
             <fieldset class="ledger-fieldset">
               <legend class="ledger-field-label">买单人 <small>单选</small></legend>
               <div class="ledger-person-grid">
@@ -850,6 +918,7 @@
               <h3>${escapeHtml(bill.category)}</h3>
               ${renderBillNoteControl(bill)}
               ${bill.orderedAt ? `<p class="ledger-bill-date">${escapeHtml(formatBillDate(bill.orderedAt))}</p>` : ""}
+              ${bill.receiptImage ? `<a class="ledger-bill-receipt" href="${escapeAttribute(bill.receiptImage.dataUrl)}" target="_blank" rel="noopener noreferrer" aria-label="查看账单截图"><img src="${escapeAttribute(bill.receiptImage.dataUrl)}" alt=""><span>查看截图</span></a>` : ""}
             </div>
           </div>
           <div class="ledger-bill-amount">
@@ -1428,6 +1497,20 @@
       return;
     }
 
+    const billBeingEdited = ledgerData.bills.find((bill) => bill.id === editingBillId);
+    let receiptImage = billBeingEdited?.receiptImage || null;
+    if (formData.get("removeReceiptImage") === "1") receiptImage = null;
+    const receiptFile = form.elements.receiptImage?.files?.[0] || null;
+    if (receiptFile) {
+      try {
+        receiptImage = await readImageFile(receiptFile);
+      } catch (error) {
+        setFormError(form, error.message || "截图上传失败，请换一张图片。");
+        form.elements.receiptImage?.focus();
+        return;
+      }
+    }
+
     const now = new Date().toISOString();
     const fields = {
       originalAmountCents,
@@ -1438,9 +1521,9 @@
       orderedAt: String(formData.get("orderedAt") || ""),
       payerId,
       participantIds,
+      receiptImage,
       updatedAt: now
     };
-    const billBeingEdited = ledgerData.bills.find((bill) => bill.id === editingBillId);
     await mutateData((next) => {
       if (billBeingEdited) {
         const index = next.bills.findIndex((bill) => bill.id === billBeingEdited.id);

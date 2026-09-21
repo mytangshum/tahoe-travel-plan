@@ -189,6 +189,14 @@ body[data-active-view="ledger"] .topbar { background: rgba(250, 251, 249, .93); 
 .ledger-note-field, .ledger-date-field { display: grid; grid-template-columns: 88px minmax(0, 1fr); align-items: center; gap: 10px; padding: 14px 0 0; border-top: 0; }
 .ledger-note-field .ledger-field-label, .ledger-date-field .ledger-field-label { margin: 0; }
 .ledger-note-field .ledger-input, .ledger-date-field .ledger-input { min-height: 40px; box-sizing: border-box; border: 1px solid rgba(19,38,47,.13); border-radius: 10px; padding: 0 12px; text-align: left; color: var(--ink); background: #fff; font-size: 13px; }
+.ledger-receipt-field { display: grid; grid-template-columns: 88px minmax(0, 1fr); align-items: center; gap: 10px; padding: 14px 0 0; }
+.ledger-receipt-field .ledger-field-label { margin: 0; }
+.ledger-receipt-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.ledger-receipt-button { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; border: 1px dashed #a8c5ca; border-radius: 10px; color: var(--lake); background: #f2f8f7; cursor: pointer; font-size: 12px; font-weight: 760; }
+.ledger-receipt-field:focus-within .ledger-receipt-button { border-color: var(--lake); box-shadow: 0 0 0 3px rgba(40,123,144,.1); }
+.ledger-receipt-field .ledger-field-help { grid-column: 2; margin-top: -4px; }
+.ledger-receipt-remove { min-height: 34px; margin-top: 7px; display: inline-flex; align-items: center; gap: 8px; color: #8d6f66; font-size: 11px; cursor: pointer; }
+.ledger-receipt-remove input { width: 16px; height: 16px; accent-color: var(--lake); }
 .ledger-fieldset-heading { display: flex; align-items: center; justify-content: space-between; }
 .ledger-fieldset-heading legend { margin-bottom: 0; }
 .ledger-person-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px 8px; margin-top: 10px; }
@@ -224,6 +232,8 @@ body[data-active-view="ledger"] .topbar { background: rgba(250, 251, 249, .93); 
 .ledger-category-mark[data-ledger-category="购物"] { background: #608967; }
 .ledger-bill-title-row h3 { font-size: 14px; font-weight: 760; }
 .ledger-bill-title-row p { margin-top: 4px; color: #95a0a1; font-size: 10px; }
+.ledger-bill-receipt { width: fit-content; margin-top: 8px; display: inline-flex; align-items: center; gap: 7px; color: var(--lake); text-decoration: none; font-size: 10px; font-weight: 740; }
+.ledger-bill-receipt img { width: 42px; height: 42px; border: 1px solid rgba(19,38,47,.1); border-radius: 8px; object-fit: cover; background: #f2f5f4; }
 .ledger-bill-amount { display: grid; justify-items: end; gap: 3px; text-align: right; }
 .ledger-bill-amount strong { font-size: 16px; font-weight: 760; }
 .ledger-bill-amount span { color: var(--lake); font-size: 10px; }
