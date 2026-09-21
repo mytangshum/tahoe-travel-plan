@@ -174,28 +174,34 @@
   ],
   "accommodations": [
     {
-      "id": "stay-mammoth-area",
-      "name": "Mammoth 附近住宿",
-      "location": "Mammoth Lakes / Mammoth Mountain 附近",
+      "id": "stay-mammoth-mountain-inn",
+      "name": "Mammoth Mountain Inn",
+      "location": "10400 Minaret Road, Mammoth Lakes, CA 93546",
       "checkIn": "2027-01-16",
       "checkOut": "2027-01-19",
-      "status": "待预订"
+      "checkInTime": "16:00",
+      "checkOutTime": "11:00",
+      "status": "已预订"
     },
     {
-      "id": "stay-sierra-area",
-      "name": "Sierra-at-Tahoe 附近住宿",
-      "location": "Sierra-at-Tahoe 附近",
+      "id": "stay-hotel-azure",
+      "name": "Hotel Azure",
+      "location": "South Lake Tahoe / Sierra-at-Tahoe 附近",
       "checkIn": "2027-01-19",
       "checkOut": "2027-01-21",
-      "status": "待预订"
+      "checkInTime": "16:00",
+      "checkOutTime": "11:00",
+      "status": "已预订"
     },
     {
-      "id": "stay-palisades-area",
-      "name": "Palisades Tahoe 附近住宿",
-      "location": "Palisades Tahoe / Olympic Valley 附近",
+      "id": "stay-pepper-tree-inn",
+      "name": "Pepper Tree Inn",
+      "location": "Tahoe City / Palisades Tahoe 附近",
       "checkIn": "2027-01-21",
-      "checkOut": "2027-01-23",
-      "status": "待预订"
+      "checkOut": "2027-01-24",
+      "checkInTime": "16:00",
+      "checkOutTime": "11:00",
+      "status": "已预订"
     }
   ],
   "groundTransport": {
@@ -242,22 +248,22 @@
         "id": "drive-rno-mammoth",
         "date": "2027-01-16",
         "from": "Reno-Tahoe International Airport (RNO)",
-        "to": "Mammoth Lakes / Mammoth Mountain 附近",
-        "status": "待确认具体路线与住宿地址"
+        "to": "Mammoth Mountain Inn",
+        "status": "住宿已预订，路线按酒店地址规划"
       },
       {
         "id": "drive-mammoth-sierra",
         "date": "2027-01-19",
         "from": "Mammoth Mountain",
-        "to": "Sierra-at-Tahoe 附近",
-        "status": "待确认具体路线与住宿地址"
+        "to": "Hotel Azure",
+        "status": "住宿已预订，路线按酒店位置规划"
       },
       {
         "id": "drive-sierra-palisades",
         "date": "2027-01-21",
         "from": "Sierra-at-Tahoe",
-        "to": "Palisades Tahoe 附近",
-        "status": "待确认具体路线与住宿地址"
+        "to": "Pepper Tree Inn",
+        "status": "住宿已预订，路线按酒店位置规划"
       },
       {
         "id": "drive-palisades-rno",
@@ -307,7 +313,7 @@
           "id": "d1-checkin",
           "time": "晚上",
           "type": "check-in",
-          "text": "入住 Mammoth 附近住宿，酒店待预订。",
+          "text": "入住 Mammoth Mountain Inn，已预订。",
           "placeId": "mammoth-lakes"
         }
       ]
@@ -376,7 +382,7 @@
           "id": "d4-checkin-sierra",
           "time": "晚上",
           "type": "check-in",
-          "text": "入住 Sierra-at-Tahoe 附近住宿，酒店待预订。",
+          "text": "入住 Hotel Azure，已预订。",
           "placeId": "sierra-at-tahoe"
         }
       ]
@@ -428,7 +434,7 @@
           "id": "d6-checkin-palisades",
           "time": "晚上",
           "type": "check-in",
-          "text": "入住 Palisades Tahoe 附近住宿，酒店待预订。",
+          "text": "入住 Pepper Tree Inn，已预订。",
           "placeId": "palisades-tahoe"
         }
       ]
@@ -572,7 +578,7 @@
   "issuesAndUncertainties": [
     "航班号和中转机场待确认。",
     "租车公司、车型、取还车细节待确认。",
-    "酒店尚未预订，仅记录住宿大概区域。",
+    "住宿已根据截图更新；确认号、PIN、邮箱、订单号等敏感信息未写入网页。",
     "用户表示不需要买票。",
     "To Do 和记账先保持空白。"
   ],
