@@ -8,12 +8,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>AI 旅行网页模板</title>
-  <link rel="stylesheet" href="styles.css?v=20270116-gate-1">
+  <link rel="stylesheet" href="styles.css?v=20270116-drive-collapse-1">
   <link rel="stylesheet" href="ledger.css?v=20270116-receipt-1">
   <script src="runtime-storage.js?v=20270116-sync-1" defer></script>
   <script src="overview-map.js?v=20260910-2" defer></script>
   <script src="route-ui.js?v=20260910-2" defer></script>
-  <script src="app.js?v=20270116-gate-1" defer></script>
+  <script src="app.js?v=20270116-drive-collapse-1" defer></script>
   <script src="ticket-pdf-preview.js?v=20260910-2" defer></script>
   <script src="ledger.js?v=20270116-receipt-1" defer></script>
   <script src="site-navigation.js?v=20260910-2" defer></script>
@@ -95,15 +95,20 @@
     </section>
 
     <section class="section drive-section" id="drive" aria-labelledby="drive-title" data-module="driving" hidden>
-      <div class="section-heading">
+      <button class="section-heading drive-section-toggle" id="drive-section-toggle" type="button" aria-expanded="false" aria-controls="drive-panel">
         <div>
           <p class="section-kicker">ON THE ROAD</p>
           <h2 id="drive-title">自驾信息</h2>
         </div>
-        <span class="soft-label" id="rental-provider-label">RENTAL</span>
+        <span class="section-heading__right">
+          <span class="soft-label" id="rental-provider-label">RENTAL</span>
+          <span class="drive-toggle-icon" aria-hidden="true">+</span>
+        </span>
+      </button>
+      <div id="drive-panel" hidden>
+        <div id="rental-card"></div>
+        <div class="accordion-stack" id="drive-notes"></div>
       </div>
-      <div id="rental-card"></div>
-      <div class="accordion-stack" id="drive-notes"></div>
     </section>
 
     <section class="section prep-section" id="prep" aria-labelledby="prep-title" data-module="todo" hidden>

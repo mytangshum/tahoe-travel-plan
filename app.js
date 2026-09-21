@@ -4,6 +4,7 @@ const state = {
   runtimeAdapters: {},
   expandedDay: null,
   flightsExpanded: false,
+  driveExpanded: false,
   countdownTimer: null,
   purchasedTickets: new Set(),
   todos: [],
@@ -841,6 +842,20 @@ function renderRental() {
   const transport = state.data.groundTransport;
   const rental = transport.rentalCar;
   $("#rental-provider-label").textContent = rental.company;
+  const toggle = $("#drive-section-toggle");
+  const panel = $("#drive-panel");
+  const icon = $(".drive-toggle-icon", toggle);
+  if (toggle && panel) {
+    toggle.setAttribute("aria-expanded", String(state.driveExpanded));
+    panel.hidden = !state.driveExpanded;
+    if (icon) icon.textContent = state.driveExpanded ? "−" : "+";
+    toggle.onclick = () => {
+      state.driveExpanded = !state.driveExpanded;
+      toggle.setAttribute("aria-expanded", String(state.driveExpanded));
+      panel.hidden = !state.driveExpanded;
+      if (icon) icon.textContent = state.driveExpanded ? "−" : "+";
+    };
+  }
   const status = rentalStatus(rental);
   const vehicle = rental.vehicle || {};
   const price = rental.price || {};
