@@ -539,7 +539,7 @@ function dayCard(day) {
       <span class="day-dot" aria-hidden="true"></span>
       <button class="day-toggle" type="button" aria-expanded="${expanded}" aria-controls="day-detail-${day.day}">
         <span>
-          <span class="day-meta">DAY ${String(day.day).padStart(2, "0")} · ${escapeHtml(formatSlashDate(day.date))} ${escapeHtml(formatWeekday(day.date))}${isToday ? " · 今天" : ""}</span>
+          <span class="day-meta">Day ${day.day} · ${escapeHtml(formatSlashDate(day.date))} ${escapeHtml(formatWeekday(day.date))}${isToday ? " · 今天" : ""}</span>
           <span class="day-title">${escapeHtml(day.title)}</span>
           ${ticketSummary}
         </span>
