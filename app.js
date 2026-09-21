@@ -171,6 +171,11 @@ function formatWeekday(dateString) {
   return new Intl.DateTimeFormat("zh-CN", { weekday: "short" }).format(date);
 }
 
+function formatSlashDate(dateString) {
+  const [, month, day] = dateString.split("-");
+  return `${Number(month)}/${Number(day)}`;
+}
+
 function todayForTrip() {
   const timeZone = state.data?.metadata?.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
   try {
@@ -534,7 +539,7 @@ function dayCard(day) {
       <span class="day-dot" aria-hidden="true"></span>
       <button class="day-toggle" type="button" aria-expanded="${expanded}" aria-controls="day-detail-${day.day}">
         <span>
-          <span class="day-meta">DAY ${String(day.day).padStart(2, "0")} · ${escapeHtml(formatCompactDate(day.date))} ${escapeHtml(formatWeekday(day.date))}${isToday ? " · 今天" : ""}</span>
+          <span class="day-meta">DAY ${String(day.day).padStart(2, "0")} · ${escapeHtml(formatSlashDate(day.date))} ${escapeHtml(formatWeekday(day.date))}${isToday ? " · 今天" : ""}</span>
           <span class="day-title">${escapeHtml(day.title)}</span>
           ${ticketSummary}
         </span>
