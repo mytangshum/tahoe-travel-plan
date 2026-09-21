@@ -3,8 +3,13 @@ const json = (body, status = 200) => new Response(JSON.stringify(body), {
   headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" }
 });
 
-const table = { bills: "ledger_bills", travelers: "ledger_travelers", todos: "trip_todos", tickets: "trip_tickets", itinerary: "trip_itinerary" };
+const table = { bills: "ledger_bills", travelers: "ledger_travelers", todos: "trip_todos", tickets: "trip_tickets", itinerary: "trip_itinerary", settlements: "ledger_settlements" };
 const safeId = (value) => String(value || "").trim().slice(0, 160);
+
+async function ensureTables(db, collections) {
+  if (!collections.includes("settlements")) return;
+  await db.prepare("CREATE TABLE IF NOT EXISTS ledger_settlements (id TEXT NOT NULL, trip_id TEXT NOT NULL, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, payload TEXT NOT NULL, PRIMARY KEY (trip_id, id))").run();
+}
 
 async function readSnapshot(db, tripId, collections) {
   const snapshot = {
@@ -15,6 +20,7 @@ async function readSnapshot(db, tripId, collections) {
     todos: [],
     tickets: [],
     itinerary: [],
+    settlements: [],
     updatedAt: new Date().toISOString()
   };
   await Promise.all(collections.map(async (collection) => {
@@ -32,6 +38,7 @@ export async function onRequest(context) {
   const collections = [...new Set(String(requested || Object.keys(table).join(",")).split(",").filter((name) => table[name]))];
   if (!collections.length) return json({ error: "at least one valid collection is required" }, 400);
   try {
+    await ensureTables(context.env.DB, collections);
     if (context.request.method === "GET") return json(await readSnapshot(context.env.DB, tripId, collections));
     if (context.request.method !== "POST") return json({ error: "method not allowed" }, 405);
     const body = await context.request.json();

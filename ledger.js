@@ -302,6 +302,7 @@
       settings: deepClone(DEFAULT_SETTINGS),
       travelers: [],
       bills: [],
+      settlements: [],
       updatedAt: new Date().toISOString()
     };
   }
@@ -333,8 +334,20 @@
     const availableCurrencies = new Set([baseCurrency, ...commonCurrencies]);
     const requestedLast = String(raw.settings?.lastCurrency || baseCurrency).toUpperCase();
     const lastCurrency = availableCurrencies.has(requestedLast) ? requestedLast : baseCurrency;
+    const settlements = (Array.isArray(raw.settlements) ? raw.settlements : []).flatMap((settlement) => {
+      const id = String(settlement?.id || "").trim();
+      if (!id) return [];
+      return [{
+        id,
+        settled: settlement?.settled !== false,
+        updatedAt: typeof settlement?.updatedAt === "string" ? settlement.updatedAt : new Date().toISOString()
+      }];
+    });
     const settledTransferIds = [...new Set(
-      (Array.isArray(raw.settings?.settledTransferIds) ? raw.settings.settledTransferIds : [])
+      [
+        ...(Array.isArray(raw.settings?.settledTransferIds) ? raw.settings.settledTransferIds : []),
+        ...settlements.filter((settlement) => settlement.settled).map((settlement) => settlement.id)
+      ]
         .map((id) => String(id).trim())
         .filter(Boolean)
     )];
@@ -369,6 +382,7 @@
       settings: { baseCurrency, commonCurrencies, lastCurrency, settledTransferIds },
       travelers,
       bills,
+      settlements,
       updatedAt: typeof raw.updatedAt === "string" ? raw.updatedAt : fallback.updatedAt
     };
   }
@@ -380,7 +394,7 @@
         ...options,
         mode: "local",
         tripId,
-        collections: ["settings", "travelers", "bills"]
+        collections: ["settings", "travelers", "bills", "settlements"]
       });
     }
 
@@ -454,11 +468,11 @@
         ...options,
         mode: "d1",
         tripId,
-        collections: ["settings", "travelers", "bills"]
+        collections: ["settings", "travelers", "bills", "settlements"]
       });
     }
     let previous = null;
-    const collections = ["bills", "travelers"];
+    const collections = ["bills", "travelers", "settlements"];
     const rawApiBase = String(options.apiBase || "/api/trip").trim();
     if (!/^\/(?!\/)/.test(rawApiBase) || rawApiBase.includes("\\") || /[?#]/.test(rawApiBase)) {
       throw new Error("D1 apiBase must be a same-origin absolute path");
@@ -1248,7 +1262,9 @@
   }
 
   function isTransferSettled(transfer) {
-    return ledgerData.settings.settledTransferIds.includes(transferId(transfer));
+    const id = transferId(transfer);
+    return ledgerData.settings.settledTransferIds.includes(id)
+      || ledgerData.settlements.some((settlement) => settlement.id === id && settlement.settled);
   }
 
   function renderReceiptDialog() {
@@ -1837,6 +1853,16 @@
       if (settled) ids.add(normalizedId);
       else ids.delete(normalizedId);
       next.settings.settledTransferIds = [...ids];
+      const current = Array.isArray(next.settlements) ? next.settlements : [];
+      const index = current.findIndex((settlement) => settlement.id === normalizedId);
+      if (settled) {
+        const record = { id: normalizedId, settled: true, updatedAt: new Date().toISOString() };
+        if (index >= 0) current[index] = { ...current[index], ...record };
+        else current.push(record);
+      } else if (index >= 0) {
+        current.splice(index, 1);
+      }
+      next.settlements = current;
     }, {
       reason: "transfer-settlement-toggled",
       message: settled ? "已标记为结清" : "已改回待转账"
