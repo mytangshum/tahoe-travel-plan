@@ -303,18 +303,18 @@
           "id": "d1-drive-mammoth",
           "time": "下午",
           "type": "drive",
-          "text": "自驾前往 Mammoth 附近住宿区域。",
+          "text": "自驾前往 Mammoth Mountain Inn。",
           "placeIds": [
             "reno-airport",
-            "mammoth-lakes"
+            "mammoth-mountain-inn"
           ]
         },
         {
           "id": "d1-checkin",
           "time": "晚上",
           "type": "check-in",
-          "text": "入住 Mammoth Mountain Inn，已预订。",
-          "placeId": "mammoth-lakes"
+          "text": "本晚住宿：Mammoth Mountain Inn（1/16 入住，1/19 退房）。",
+          "placeId": "mammoth-mountain-inn"
         }
       ]
     },
@@ -332,6 +332,13 @@
           "type": "attraction",
           "text": "Mammoth Mountain 滑雪。",
           "placeId": "mammoth-mountain"
+        },
+        {
+          "id": "d2-stay-mammoth",
+          "time": "晚上",
+          "type": "check-in",
+          "text": "本晚住宿：Mammoth Mountain Inn。",
+          "placeId": "mammoth-mountain-inn"
         }
       ]
     },
@@ -349,6 +356,13 @@
           "type": "attraction",
           "text": "Mammoth Mountain 滑雪。",
           "placeId": "mammoth-mountain"
+        },
+        {
+          "id": "d3-stay-mammoth",
+          "time": "晚上",
+          "type": "check-in",
+          "text": "本晚住宿：Mammoth Mountain Inn。",
+          "placeId": "mammoth-mountain-inn"
         }
       ]
     },
@@ -372,18 +386,18 @@
           "id": "d4-drive-sierra",
           "time": "滑雪结束后",
           "type": "drive",
-          "text": "开车前往 Sierra-at-Tahoe 附近住宿区域。",
+          "text": "开车前往 Hotel Azure。",
           "placeIds": [
             "mammoth-mountain",
-            "sierra-at-tahoe"
+            "hotel-azure"
           ]
         },
         {
           "id": "d4-checkin-sierra",
           "time": "晚上",
           "type": "check-in",
-          "text": "入住 Hotel Azure，已预订。",
-          "placeId": "sierra-at-tahoe"
+          "text": "本晚住宿：Hotel Azure（1/19 入住，1/21 退房）。",
+          "placeId": "hotel-azure"
         }
       ]
     },
@@ -401,6 +415,13 @@
           "type": "attraction",
           "text": "Sierra-at-Tahoe 滑雪。",
           "placeId": "sierra-at-tahoe"
+        },
+        {
+          "id": "d5-stay-azure",
+          "time": "晚上",
+          "type": "check-in",
+          "text": "本晚住宿：Hotel Azure。",
+          "placeId": "hotel-azure"
         }
       ]
     },
@@ -424,18 +445,18 @@
           "id": "d6-drive-palisades",
           "time": "滑雪结束后",
           "type": "drive",
-          "text": "开车前往 Palisades Tahoe 附近住宿区域。",
+          "text": "开车前往 Pepper Tree Inn。",
           "placeIds": [
             "sierra-at-tahoe",
-            "palisades-tahoe"
+            "pepper-tree-inn"
           ]
         },
         {
           "id": "d6-checkin-palisades",
           "time": "晚上",
           "type": "check-in",
-          "text": "入住 Pepper Tree Inn，已预订。",
-          "placeId": "palisades-tahoe"
+          "text": "本晚住宿：Pepper Tree Inn（1/21 入住，1/24 退房）。",
+          "placeId": "pepper-tree-inn"
         }
       ]
     },
@@ -453,6 +474,13 @@
           "type": "attraction",
           "text": "Palisades Tahoe 滑雪。",
           "placeId": "palisades-tahoe"
+        },
+        {
+          "id": "d7-stay-pepper-tree",
+          "time": "晚上",
+          "type": "check-in",
+          "text": "本晚住宿：Pepper Tree Inn。",
+          "placeId": "pepper-tree-inn"
         }
       ]
     },
@@ -471,6 +499,13 @@
           "type": "attraction",
           "text": "Palisades Tahoe 滑雪。",
           "placeId": "palisades-tahoe"
+        },
+        {
+          "id": "d8-stay-pepper-tree",
+          "time": "住宿",
+          "type": "check-in",
+          "text": "Pepper Tree Inn 保留至 1/24 11:00；返程前按实际安排退房或取行李。",
+          "placeId": "pepper-tree-inn"
         },
         {
           "id": "d8-drive-rno",
@@ -512,6 +547,19 @@
       "lng": -118.9721
     },
     {
+      "id": "mammoth-mountain-inn",
+      "name": "Mammoth Mountain Inn",
+      "nameZh": "Mammoth Mountain Inn",
+      "city": "Mammoth Lakes",
+      "countryCode": "US",
+      "address": "10400 Minaret Road, Mammoth Lakes, CA 93546",
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=10400%20Minaret%20Road%2C%20Mammoth%20Lakes%2C%20CA%2093546",
+      "navigation": {
+        "query": "10400 Minaret Road, Mammoth Lakes, CA 93546",
+        "url": "https://www.google.com/maps/search/?api=1&query=10400%20Minaret%20Road%2C%20Mammoth%20Lakes%2C%20CA%2093546"
+      }
+    },
+    {
       "id": "mammoth-mountain",
       "name": "Mammoth Mountain",
       "nameZh": "Mammoth Mountain",
@@ -530,6 +578,19 @@
       "lng": -120.21
     },
     {
+      "id": "hotel-azure",
+      "name": "Hotel Azure",
+      "nameZh": "Hotel Azure",
+      "city": "South Lake Tahoe",
+      "countryCode": "US",
+      "address": "3300 Lake Tahoe Boulevard, South Lake Tahoe, CA 96150",
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=3300%20Lake%20Tahoe%20Boulevard%2C%20South%20Lake%20Tahoe%2C%20CA%2096150",
+      "navigation": {
+        "query": "3300 Lake Tahoe Boulevard, South Lake Tahoe, CA 96150",
+        "url": "https://www.google.com/maps/search/?api=1&query=3300%20Lake%20Tahoe%20Boulevard%2C%20South%20Lake%20Tahoe%2C%20CA%2096150"
+      }
+    },
+    {
       "id": "palisades-tahoe",
       "name": "Palisades Tahoe",
       "nameZh": "Palisades Tahoe",
@@ -537,6 +598,19 @@
       "countryCode": "US",
       "lat": 39.1968,
       "lng": -120.2354
+    },
+    {
+      "id": "pepper-tree-inn",
+      "name": "Pepper Tree Inn",
+      "nameZh": "Pepper Tree Inn",
+      "city": "Tahoe City",
+      "countryCode": "US",
+      "address": "645 North Lake Boulevard, Tahoe City, CA 96145",
+      "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=645%20North%20Lake%20Boulevard%2C%20Tahoe%20City%2C%20CA%2096145",
+      "navigation": {
+        "query": "645 North Lake Boulevard, Tahoe City, CA 96145",
+        "url": "https://www.google.com/maps/search/?api=1&query=645%20North%20Lake%20Boulevard%2C%20Tahoe%20City%2C%20CA%2096145"
+      }
     }
   ],
   "restaurants": [],
