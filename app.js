@@ -529,7 +529,6 @@ function dayCard(day) {
         <span>
           <span class="day-meta">DAY ${String(day.day).padStart(2, "0")} · ${escapeHtml(formatCompactDate(day.date))}${isToday ? " · 今天" : ""}</span>
           <span class="day-title">${escapeHtml(day.title)}</span>
-          <span class="day-locations">${escapeHtml(day.locations.join(" → "))}</span>
           ${ticketSummary}
         </span>
         <span class="day-chevron" aria-hidden="true">+</span>
