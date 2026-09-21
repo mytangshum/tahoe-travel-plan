@@ -5,7 +5,8 @@
   const DEFAULT_SETTINGS = Object.freeze({
     baseCurrency: "USD",
     commonCurrencies: ["CNY", "EUR", "HKD"],
-    lastCurrency: "USD"
+    lastCurrency: "USD",
+    settledTransferIds: []
   });
   const CATEGORIES = Object.freeze(["餐饮", "交通", "住宿", "门票", "购物", "其他"]);
   const AVATAR_COLORS = Object.freeze([
@@ -332,6 +333,11 @@
     const availableCurrencies = new Set([baseCurrency, ...commonCurrencies]);
     const requestedLast = String(raw.settings?.lastCurrency || baseCurrency).toUpperCase();
     const lastCurrency = availableCurrencies.has(requestedLast) ? requestedLast : baseCurrency;
+    const settledTransferIds = [...new Set(
+      (Array.isArray(raw.settings?.settledTransferIds) ? raw.settings.settledTransferIds : [])
+        .map((id) => String(id).trim())
+        .filter(Boolean)
+    )];
     const bills = (Array.isArray(raw.bills) ? raw.bills : []).flatMap((bill) => {
       const originalAmountCents = Number(bill?.originalAmountCents);
       const baseAmountCents = Number(bill?.baseAmountCents);
@@ -360,7 +366,7 @@
     });
     return {
       version: STORAGE_VERSION,
-      settings: { baseCurrency, commonCurrencies, lastCurrency },
+      settings: { baseCurrency, commonCurrencies, lastCurrency, settledTransferIds },
       travelers,
       bills,
       updatedAt: typeof raw.updatedAt === "string" ? raw.updatedAt : fallback.updatedAt
@@ -1007,6 +1013,7 @@
   function renderStatsPage() {
     const stats = calculateStats();
     const baseCurrency = ledgerData.settings.baseCurrency;
+    const settledTransferCount = stats.transfers.filter(isTransferSettled).length;
     return `
       <section class="ledger-tab-panel" data-ledger-panel="stats" role="tabpanel" aria-labelledby="ledger-stats-tab" ${activeTab === "stats" ? "" : "hidden"}>
         <section class="ledger-stats-overview" aria-labelledby="ledger-stats-title">
@@ -1021,21 +1028,27 @@
               <p class="ledger-section-kicker">结算方案</p>
               <h2 id="ledger-settlement-title">谁需要转给谁</h2>
             </div>
-            <span class="ledger-soft-count">${stats.transfers.length} 笔转账</span>
+            <span class="ledger-soft-count">${settledTransferCount} / ${stats.transfers.length} 已结清</span>
           </div>
           ${stats.transfers.length ? `
             <div class="ledger-transfer-list">
               ${stats.transfers.map((transfer) => {
                 const from = travelerById(transfer.fromId);
                 const to = travelerById(transfer.toId);
+                const settled = isTransferSettled(transfer);
                 return `
-                  <div class="ledger-transfer-row">
-                    <div class="ledger-transfer-person">
+                  <label class="ledger-transfer-row ${settled ? "ledger-is-settled" : ""}">
+                    <input type="checkbox" data-ledger-transfer-settled="${escapeAttribute(transferId(transfer))}" ${settled ? "checked" : ""} aria-label="标记为已结清：${escapeAttribute(from?.name || "")} 转给 ${escapeAttribute(to?.name || "")}">
+                    <span class="ledger-transfer-check" aria-hidden="true">✓</span>
+                    <span class="ledger-transfer-person">
                       ${renderAvatar(from)}
                       <span><strong>${escapeHtml(from?.name || "")}</strong><small>转给 ${escapeHtml(to?.name || "")}</small></span>
-                    </div>
-                    <strong class="ledger-transfer-amount">${escapeHtml(formatMoney(transfer.amountCents, baseCurrency))}</strong>
-                  </div>`;
+                    </span>
+                    <span class="ledger-transfer-side">
+                      <strong class="ledger-transfer-amount">${escapeHtml(formatMoney(transfer.amountCents, baseCurrency))}</strong>
+                      <small>${settled ? "已结清" : "待转账"}</small>
+                    </span>
+                  </label>`;
               }).join("")}
             </div>` : `
             <div class="ledger-empty-state"><p>${ledgerData.bills.length ? "大家已经结清，无需转账。" : "添加账单后，这里会自动生成结算单。"}</p></div>`}
@@ -1228,6 +1241,14 @@
           <div class="ledger-currency-results" data-ledger-currency-results>${renderCurrencyResultsMarkup()}</div>
         </div>
       </dialog>`;
+  }
+
+  function transferId(transfer) {
+    return `${transfer.fromId}->${transfer.toId}:${transfer.amountCents}`;
+  }
+
+  function isTransferSettled(transfer) {
+    return ledgerData.settings.settledTransferIds.includes(transferId(transfer));
   }
 
   function renderReceiptDialog() {
@@ -1807,6 +1828,21 @@
     });
   }
 
+  async function toggleTransferSettlement(id, settled) {
+    const normalizedId = String(id || "").trim();
+    if (!normalizedId) return;
+    activeTab = "stats";
+    await mutateData((next) => {
+      const ids = new Set(Array.isArray(next.settings.settledTransferIds) ? next.settings.settledTransferIds : []);
+      if (settled) ids.add(normalizedId);
+      else ids.delete(normalizedId);
+      next.settings.settledTransferIds = [...ids];
+    }, {
+      reason: "transfer-settlement-toggled",
+      message: settled ? "已标记为结清" : "已改回待转账"
+    });
+  }
+
   function previewReceipt(id) {
     if (!ledgerData.bills.some((bill) => bill.id === id && bill.receiptImage)) return;
     receiptPreviewBillId = id;
@@ -1902,6 +1938,11 @@
   }
 
   function handleRootChange(event) {
+    const settlement = event.target.closest("[data-ledger-transfer-settled]");
+    if (settlement) {
+      void toggleTransferSettlement(settlement.dataset.ledgerTransferSettled, settlement.checked);
+      return;
+    }
     if (event.target.matches('[data-ledger-field="currency"]')) syncCurrencyField(event.target);
     if (event.target.closest('[data-ledger-form="bill"]')) {
       captureBillDraft();

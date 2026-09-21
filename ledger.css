@@ -249,15 +249,22 @@ body[data-active-view="ledger"] .topbar { background: rgba(250, 251, 249, .93); 
 .ledger-stats-overview > span { display: block; margin-top: 8px; color: #899697; font-size: 10px; }
 .ledger-settlement-section, .ledger-member-stats-section { margin-top: 30px; }
 .ledger-transfer-list { margin-top: 14px; overflow: hidden; }
-.ledger-transfer-row { min-height: 76px; display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; align-items: center; gap: 11px; padding: 12px 16px; border-top: 1px solid rgba(19,38,47,.1); }
+.ledger-transfer-row { min-height: 76px; display: grid; grid-template-columns: 24px 42px minmax(0, 1fr) auto; align-items: center; gap: 11px; padding: 12px 16px; border-top: 1px solid rgba(19,38,47,.1); cursor: pointer; }
 .ledger-transfer-row:first-child { border-top: 0; }
+.ledger-transfer-row input { position: absolute; opacity: 0; pointer-events: none; }
+.ledger-transfer-check { width: 22px; height: 22px; display: grid; place-items: center; border: 1.5px solid #a8b7b8; border-radius: 8px; color: transparent; font-size: 12px; }
+.ledger-transfer-row.ledger-is-settled .ledger-transfer-check { border-color: var(--forest); color: #fff; background: var(--forest); }
 .ledger-transfer-person { display: contents; }
 .ledger-transfer-person > span { min-width: 0; display: grid; gap: 5px; }
 .ledger-transfer-person strong { overflow: hidden; font-size: 14px; font-weight: 760; text-overflow: ellipsis; white-space: nowrap; }
 .ledger-transfer-person small { color: #8a9899; font-size: 10px; }
 .ledger-transfer-person small::first-letter { color: #8a9899; }
 .ledger-transfer-target { align-self: end; margin-bottom: 5px; opacity: .9; }
+.ledger-transfer-side { display: grid; justify-items: end; gap: 3px; }
 .ledger-transfer-amount { white-space: nowrap; font-size: 17px; font-weight: 780; }
+.ledger-transfer-side small { color: #9aa7a8; font-size: 9px; font-weight: 700; }
+.ledger-transfer-row.ledger-is-settled .ledger-transfer-amount { color: #6f8175; text-decoration: line-through; }
+.ledger-transfer-row.ledger-is-settled .ledger-transfer-side small { color: var(--forest); }
 .ledger-member-stats-list { margin-top: 14px; overflow: hidden; }
 .ledger-member-stat { border-top: 1px solid rgba(19,38,47,.1); }
 .ledger-member-stat:first-child { border-top: 0; }
@@ -415,9 +422,10 @@ body[data-active-view="ledger"] .topbar { background: rgba(250, 251, 249, .93); 
 .ledger-currency-search .ledger-input { appearance: none; -webkit-appearance: none; border: 0 !important; outline: 0; box-shadow: none !important; background: transparent !important; }
 
 .ledger-transfer-list, .ledger-member-stats-list { display: grid; gap: 10px; border: 0; border-radius: 0; background: transparent; box-shadow: none; overflow: visible; }
-.ledger-transfer-row { min-height: 84px; grid-template-columns: 42px minmax(0, 1fr) auto; border: 1px solid rgba(19,38,47,.08); border-radius: 17px; background: #fff; box-shadow: 0 10px 26px rgba(18,42,50,.05); }
+.ledger-transfer-row { min-height: 84px; grid-template-columns: 24px 42px minmax(0, 1fr) auto; border: 1px solid rgba(19,38,47,.08); border-radius: 17px; background: #fff; box-shadow: 0 10px 26px rgba(18,42,50,.05); }
 .ledger-transfer-row + .ledger-transfer-row { border-top: 1px solid rgba(19,38,47,.08); }
 .ledger-transfer-amount { color: #b04439; font-size: 19px; }
+.ledger-transfer-row.ledger-is-settled { background: #f5f8f4; }
 .ledger-member-stat { border: 1px solid rgba(19,38,47,.08); border-radius: 17px; background: #fff; box-shadow: 0 10px 26px rgba(18,42,50,.05); overflow: hidden; }
 .ledger-member-stat + .ledger-member-stat { border-top: 1px solid rgba(19,38,47,.08); }
 .ledger-member-stat-summary { min-height: 78px; padding: 14px 17px; }
