@@ -150,6 +150,7 @@
   let billDraft = null;
   let editingMemberId = null;
   let editingNoteBillId = null;
+  let receiptPreviewBillId = null;
   let pendingNoteSave = null;
   let noteOpenRequest = 0;
   let mutationQueue = Promise.resolve();
@@ -918,7 +919,7 @@
               <h3>${escapeHtml(bill.category)}</h3>
               ${renderBillNoteControl(bill)}
               ${bill.orderedAt ? `<p class="ledger-bill-date">${escapeHtml(formatBillDate(bill.orderedAt))}</p>` : ""}
-              ${bill.receiptImage ? `<a class="ledger-bill-receipt" href="${escapeAttribute(bill.receiptImage.dataUrl)}" target="_blank" rel="noopener noreferrer" aria-label="查看账单截图"><img src="${escapeAttribute(bill.receiptImage.dataUrl)}" alt=""><span>查看截图</span></a>` : ""}
+              ${bill.receiptImage ? `<button class="ledger-bill-receipt" type="button" data-ledger-action="preview-receipt" data-ledger-id="${escapeAttribute(bill.id)}" aria-label="放大查看账单截图"><img src="${escapeAttribute(bill.receiptImage.dataUrl)}" alt=""><span>查看截图</span></button>` : ""}
             </div>
           </div>
           <div class="ledger-bill-amount">
@@ -1229,6 +1230,24 @@
       </dialog>`;
   }
 
+  function renderReceiptDialog() {
+    const bill = ledgerData.bills.find((entry) => entry.id === receiptPreviewBillId);
+    const receipt = bill?.receiptImage;
+    return `
+      <dialog class="ledger-dialog ledger-receipt-dialog" data-ledger-dialog="receipt" aria-labelledby="ledger-receipt-dialog-title">
+        <div class="ledger-dialog-header">
+          <div>
+            <p class="ledger-section-kicker">截图预览</p>
+            <h2 id="ledger-receipt-dialog-title">${escapeHtml(bill?.note || bill?.category || "账单截图")}</h2>
+          </div>
+          <button class="ledger-dialog-close" type="button" data-ledger-action="close-dialog" aria-label="关闭">×</button>
+        </div>
+        <div class="ledger-dialog-body">
+          ${receipt ? `<img class="ledger-receipt-preview" src="${escapeAttribute(receipt.dataUrl)}" alt="账单截图">` : `<p class="ledger-dialog-empty">这笔账单还没有截图。</p>`}
+        </div>
+      </dialog>`;
+  }
+
   function renderApp() {
     if (!ledgerRoot || !ledgerData) return;
     ledgerRoot.innerHTML = `
@@ -1249,6 +1268,7 @@
         ${renderMembersDialog()}
         ${renderSettingsDialog()}
         ${renderCurrencyDialog()}
+        ${renderReceiptDialog()}
       </div>`;
     syncSplitSummary();
     attachDialogBehavior();
@@ -1382,6 +1402,7 @@
     ledgerRoot.querySelectorAll("dialog[data-ledger-dialog]").forEach((dialog) => {
       dialog.addEventListener("close", () => {
         if (dialog.dataset.ledgerDialog === "members") editingMemberId = null;
+        if (dialog.dataset.ledgerDialog === "receipt") receiptPreviewBillId = null;
         if (openDialogName === dialog.dataset.ledgerDialog) openDialogName = null;
       });
       dialog.addEventListener("cancel", () => {
@@ -1786,6 +1807,13 @@
     });
   }
 
+  function previewReceipt(id) {
+    if (!ledgerData.bills.some((bill) => bill.id === id && bill.receiptImage)) return;
+    receiptPreviewBillId = id;
+    openDialogName = "receipt";
+    renderApp();
+  }
+
   function handleAction(button) {
     const action = button.dataset.ledgerAction;
     if (!action) return;
@@ -1827,6 +1855,8 @@
       deleteBill(button.dataset.ledgerId || "");
     } else if (action === "edit-bill-note") {
       void openBillNoteEditor(button.dataset.ledgerId || "");
+    } else if (action === "preview-receipt") {
+      previewReceipt(button.dataset.ledgerId || "");
     } else if (action === "cancel-note-edit") {
       cancelBillNoteEditor();
     } else if (action === "cancel-edit") {

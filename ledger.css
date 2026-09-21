@@ -232,7 +232,7 @@ body[data-active-view="ledger"] .topbar { background: rgba(250, 251, 249, .93); 
 .ledger-category-mark[data-ledger-category="购物"] { background: #608967; }
 .ledger-bill-title-row h3 { font-size: 14px; font-weight: 760; }
 .ledger-bill-title-row p { margin-top: 4px; color: #95a0a1; font-size: 10px; }
-.ledger-bill-receipt { width: fit-content; margin-top: 8px; display: inline-flex; align-items: center; gap: 7px; color: var(--lake); text-decoration: none; font-size: 10px; font-weight: 740; }
+.ledger-bill-receipt { width: fit-content; margin-top: 8px; padding: 0; border: 0; display: inline-flex; align-items: center; gap: 7px; color: var(--lake); background: transparent; text-decoration: none; cursor: pointer; font-size: 10px; font-weight: 740; }
 .ledger-bill-receipt img { width: 42px; height: 42px; border: 1px solid rgba(19,38,47,.1); border-radius: 8px; object-fit: cover; background: #f2f5f4; }
 .ledger-bill-amount { display: grid; justify-items: end; gap: 3px; text-align: right; }
 .ledger-bill-amount strong { font-size: 16px; font-weight: 760; }
@@ -301,6 +301,9 @@ body[data-active-view="ledger"] .topbar { background: rgba(250, 251, 249, .93); 
 .ledger-add-member-name .ledger-field-label { margin-bottom: 6px; }
 .ledger-add-member-form .ledger-input { min-height: 42px; }
 .ledger-dialog-note { margin-top: 13px; color: #93a0a1; font-size: 10px; line-height: 1.5; }
+.ledger-receipt-dialog { width: min(calc(100% - 18px), 760px); max-height: min(92dvh, 860px); }
+.ledger-receipt-dialog .ledger-dialog-body { padding: 10px; }
+.ledger-receipt-preview { display: block; width: 100%; max-height: calc(92dvh - 116px); border-radius: 12px; object-fit: contain; background: #f2f5f4; }
 .ledger-setting-group + .ledger-setting-group { margin-top: 23px; padding-top: 20px; border-top: 1px solid rgba(19,38,47,.1); }
 .ledger-setting-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .ledger-setting-heading h3 { font-size: 14px; font-weight: 760; }
