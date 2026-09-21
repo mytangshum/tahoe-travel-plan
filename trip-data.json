@@ -255,7 +255,24 @@
       "1/21 Sierra 滑雪结束后开往 Palisades Tahoe 附近。",
       "截图租车订单为 1/24 13:00 在 RNO 还车；若按 1/23 晚间航班返程，建议提前确认可否 1/23 提前还车。"
     ],
-    "drivingReferenceLinks": [],
+    "drivingReferenceLinks": [
+      {
+        "label": "Mammoth Mountain 官方雪况",
+        "url": "https://www.mammothmountain.com/on-the-mountain/mountain-report"
+      },
+      {
+        "label": "Sierra-at-Tahoe 官方雪况",
+        "url": "https://sierraattahoe.com/weather-snow-report/"
+      },
+      {
+        "label": "Palisades Tahoe 官方雪况",
+        "url": "https://www.palisadestahoe.com/mountain-information/snowfall-tracker"
+      },
+      {
+        "label": "Palisades Tahoe 道路/停车信息",
+        "url": "https://www.palisadestahoe.com/mountain-information/parking-and-road-conditions/road-conditions"
+      }
+    ],
     "plannedRoadLegs": [
       {
         "id": "drive-rno-mammoth",
@@ -340,6 +357,12 @@
       ],
       "schedule": [
         {
+          "id": "d2-start-mammoth",
+          "time": "出发建议",
+          "type": "note",
+          "text": "住在 Mammoth Mountain Inn，距离雪场很近；建议 08:00 前查看 Mammoth 官方雪况、开放缆车和停车/接驳信息。"
+        },
+        {
           "id": "d2-ski-mammoth",
           "time": "全天",
           "type": "attraction",
@@ -363,6 +386,12 @@
         "Mammoth Mountain"
       ],
       "schedule": [
+        {
+          "id": "d3-start-mammoth",
+          "time": "出发建议",
+          "type": "note",
+          "text": "继续滑 Mammoth；建议早餐后尽早出门，出发前确认风况、开放缆车和道路情况。"
+        },
         {
           "id": "d3-ski-mammoth",
           "time": "全天",
@@ -388,6 +417,12 @@
         "Sierra-at-Tahoe"
       ],
       "schedule": [
+        {
+          "id": "d4-start-mammoth",
+          "time": "出发建议",
+          "type": "note",
+          "text": "上午继续滑 Mammoth，建议提前整理退房/行李；滑雪结束后转场去 South Lake Tahoe。"
+        },
         {
           "id": "d4-ski-mammoth",
           "time": "白天",
@@ -423,6 +458,12 @@
       ],
       "schedule": [
         {
+          "id": "d5-start-sierra",
+          "time": "出发建议",
+          "type": "note",
+          "text": "从 Hotel Azure 前往 Sierra-at-Tahoe，建议预留 45-60 分钟车程；出门前查看 US-50 路况、雪况和停车信息。"
+        },
+        {
           "id": "d5-ski-sierra",
           "time": "全天",
           "type": "attraction",
@@ -447,6 +488,12 @@
         "Palisades Tahoe"
       ],
       "schedule": [
+        {
+          "id": "d6-start-sierra",
+          "time": "出发建议",
+          "type": "note",
+          "text": "上午继续滑 Sierra-at-Tahoe；建议早出发并确认雪况，滑雪结束后转场 Tahoe City。"
+        },
         {
           "id": "d6-ski-sierra",
           "time": "白天",
@@ -482,6 +529,12 @@
       ],
       "schedule": [
         {
+          "id": "d7-start-palisades",
+          "time": "出发建议",
+          "type": "note",
+          "text": "从 Pepper Tree Inn 前往 Palisades Tahoe，建议预留 25-40 分钟车程；出门前查看停车、道路、风况和开放缆车。"
+        },
+        {
           "id": "d7-ski-palisades",
           "time": "全天",
           "type": "attraction",
@@ -506,6 +559,12 @@
         "Reno-Tahoe International Airport"
       ],
       "schedule": [
+        {
+          "id": "d8-start-palisades",
+          "time": "出发建议",
+          "type": "note",
+          "text": "最后一天滑 Palisades，建议早上先确认雪况和返程路况；下午预留充足时间回 RNO 还车和值机。"
+        },
         {
           "id": "d8-ski-palisades",
           "time": "白天",
