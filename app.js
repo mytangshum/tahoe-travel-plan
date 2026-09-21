@@ -4,6 +4,7 @@ const state = {
   runtimeAdapters: {},
   expandedDay: null,
   flightsExpanded: false,
+  overviewExpanded: false,
   driveExpanded: false,
   countdownTimer: null,
   purchasedTickets: new Set(),
@@ -544,6 +545,22 @@ function dayCard(day) {
       </div>
     </article>
   `;
+}
+
+function setupOverviewToggle() {
+  const toggle = $("#route-section-toggle");
+  const panel = $("#route-panel");
+  const icon = $(".route-toggle-icon", toggle);
+  if (!toggle || !panel) return;
+  toggle.setAttribute("aria-expanded", String(state.overviewExpanded));
+  panel.hidden = !state.overviewExpanded;
+  if (icon) icon.textContent = state.overviewExpanded ? "−" : "+";
+  toggle.onclick = () => {
+    state.overviewExpanded = !state.overviewExpanded;
+    toggle.setAttribute("aria-expanded", String(state.overviewExpanded));
+    panel.hidden = !state.overviewExpanded;
+    if (icon) icon.textContent = state.overviewExpanded ? "−" : "+";
+  };
 }
 
 function editableScheduleItemMarkup(item, index) {
@@ -1184,7 +1201,10 @@ async function init() {
     if (moduleEnabled("overview")) preloadDefaultRouteMap();
     renderHero();
     if (moduleEnabled("flights")) renderFlights();
-    if (moduleEnabled("overview")) setupRouteExplorer();
+    if (moduleEnabled("overview")) {
+      setupOverviewToggle();
+      setupRouteExplorer();
+    }
     if (moduleEnabled("itinerary")) {
       setupPlaceMap();
       setupTicketDialog();

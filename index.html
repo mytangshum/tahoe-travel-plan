@@ -8,12 +8,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>AI 旅行网页模板</title>
-  <link rel="stylesheet" href="styles.css?v=20270116-drive-collapse-1">
+  <link rel="stylesheet" href="styles.css?v=20270116-overview-collapse-1">
   <link rel="stylesheet" href="ledger.css?v=20270116-receipt-1">
   <script src="runtime-storage.js?v=20270116-sync-1" defer></script>
   <script src="overview-map.js?v=20260910-2" defer></script>
   <script src="route-ui.js?v=20260910-2" defer></script>
-  <script src="app.js?v=20270116-drive-collapse-1" defer></script>
+  <script src="app.js?v=20270116-overview-collapse-1" defer></script>
   <script src="ticket-pdf-preview.js?v=20260910-2" defer></script>
   <script src="ledger.js?v=20270116-receipt-1" defer></script>
   <script src="site-navigation.js?v=20260910-2" defer></script>
@@ -72,15 +72,20 @@
     </section>
 
     <section class="section route-section" id="route" aria-labelledby="route-title" data-module="overview" hidden>
-      <div class="section-heading">
+      <button class="section-heading route-section-toggle" id="route-section-toggle" type="button" aria-expanded="false" aria-controls="route-panel">
         <div>
           <p class="section-kicker">THE WHOLE JOURNEY</p>
           <h2 id="route-title">本次旅程</h2>
         </div>
-        <span class="soft-label" id="route-day-count"></span>
+        <span class="section-heading__right">
+          <span class="soft-label" id="route-day-count"></span>
+          <span class="route-toggle-icon" aria-hidden="true">+</span>
+        </span>
+      </button>
+      <div id="route-panel" hidden>
+        <div id="route-explorer"></div>
+        <p class="route-caption">路线为行程示意，实际驾驶和步行请使用当天的 Google Maps 导航。</p>
       </div>
-      <div id="route-explorer"></div>
-      <p class="route-caption">路线为行程示意，实际驾驶和步行请使用当天的 Google Maps 导航。</p>
     </section>
 
     <section class="section itinerary-section" id="itinerary" aria-labelledby="itinerary-title" data-module="itinerary" hidden>
