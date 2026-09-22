@@ -59,9 +59,14 @@
   },
   "flightJourneys": [
     {
-      "id": "outbound-east-rno",
-      "title": "去程：JFK / PHL 到 Reno (RNO)",
-      "summary": "Delta，JFK / PHL 06:30 出发，经 Salt Lake City (SLC) 中转，11:13 抵达 RNO。"
+      "id": "outbound-lga-rno",
+      "title": "去程：LGA 到 Reno (RNO)",
+      "summary": "American Airlines，LGA 07:00 出发，经 Dallas/Fort Worth (DFW) 中转，12:52 抵达 RNO。"
+    },
+    {
+      "id": "outbound-phl-rno",
+      "title": "去程：PHL 到 Reno (RNO)",
+      "summary": "PHL 出发保持不变，经 Salt Lake City (SLC) 中转，11:13 抵达 RNO。"
     },
     {
       "id": "return-rno-east",
@@ -71,16 +76,65 @@
   ],
   "flights": [
     {
-      "id": "flight-east-slc",
-      "journeyId": "outbound-east-rno",
+      "id": "flight-lga-dfw",
+      "journeyId": "outbound-lga-rno",
+      "sequence": 1,
+      "airline": {
+        "name": "American Airlines"
+      },
+      "flightNumber": "AA1987",
+      "departure": {
+        "airportCode": "LGA",
+        "city": "New York",
+        "date": "2027-01-16",
+        "time": "07:00",
+        "utcOffset": "-05:00"
+      },
+      "arrival": {
+        "airportCode": "DFW",
+        "city": "Dallas/Fort Worth",
+        "date": "2027-01-16",
+        "time": "10:29",
+        "utcOffset": "-06:00"
+      }
+    },
+    {
+      "id": "flight-dfw-rno",
+      "journeyId": "outbound-lga-rno",
+      "sequence": 2,
+      "airline": {
+        "name": "American Airlines"
+      },
+      "flightNumber": "AA324",
+      "connectionFromPrevious": {
+        "plannedDurationText": "DFW 中转"
+      },
+      "departure": {
+        "airportCode": "DFW",
+        "city": "Dallas/Fort Worth",
+        "date": "2027-01-16",
+        "time": "11:11",
+        "utcOffset": "-06:00"
+      },
+      "arrival": {
+        "airportCode": "RNO",
+        "city": "Reno",
+        "date": "2027-01-16",
+        "time": "12:52",
+        "utcOffset": "-08:00"
+      }
+    },
+    {
+      "id": "flight-phl-slc",
+      "journeyId": "outbound-phl-rno",
       "sequence": 1,
       "airline": {
         "name": "Delta"
       },
-      "flightNumber": "DL892 / Cathy 待确认",
+      "flightNumber": "PHL 出发待确认",
       "departure": {
-        "airportCode": "JFK / PHL",
-        "city": "New York / Philadelphia",
+        "airportCode": "PHL",
+        "city": "Philadelphia",
         "date": "2027-01-16",
         "time": "06:30",
         "utcOffset": "-05:00"
@@ -91,11 +145,14 @@
         "date": "2027-01-16",
         "time": "10:01",
         "utcOffset": "-07:00"
-      }
+      },
+      "notes": [
+        "PHL 出发保持原计划，航班号待确认。"
+      ]
     },
     {
       "id": "flight-slc-rno",
-      "journeyId": "outbound-east-rno",
+      "journeyId": "outbound-phl-rno",
       "sequence": 2,
       "airline": {
         "name": "Delta"
@@ -317,9 +374,9 @@
       "schedule": [
         {
           "id": "d1-flight-arrival",
-          "time": "11:13",
+          "time": "11:13 / 12:52",
           "type": "flight",
-          "text": "抵达 Reno (RNO)。经 Salt Lake City (SLC) 中转。",
+          "text": "抵达 Reno (RNO)：PHL 出发 11:13 抵达；LGA 出发经 DFW 中转，12:52 抵达。",
           "placeId": "reno-airport"
         },
         {
